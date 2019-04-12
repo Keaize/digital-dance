@@ -1,14 +1,3 @@
--- AutoStyle is a Simply Love ThemePref that can allow players to always
--- automatically have one of [single, double, versus] chosen for them.
--- If AutoStyle is either "single" or "double", we don't want to load
--- SelectProfileFrames for both PLAYER_1 and PLAYER_2, but only the MasterPlayerNumber
-local AutoStyle = ThemePrefs.Get("AutoStyle")
-
--- retrieve the MasterPlayerNumber now, at initialization, so that if AutoStyle is set
--- to "single" or "double" and that singular player unjoins, we still have a handle on
--- which PlayerNumber they're supposed to be...
-local mpn = GAMESTATE:GetMasterPlayerNumber()
-
 local GetLocalProfiles = function()
 	local t = {}
 
@@ -138,7 +127,7 @@ local t = Def.ActorFrame {
 
 	CodeMessageCommand=function(self, params)
 
-		if (AutoStyle=="single" or AutoStyle=="double") and params.PlayerNumber ~= mpn then return end
+		
 
 		if params.Name == "Select" then
 			if GAMESTATE:GetNumPlayersEnabled()==0 then
@@ -168,12 +157,8 @@ local t = Def.ActorFrame {
 	end,
 
 	UpdateInternal2Command=function(self)
-		if AutoStyle=="none" or AutoStyle=="versus" then
 			UpdateInternal3(self, PLAYER_1)
 			UpdateInternal3(self, PLAYER_2)
-		else
-			UpdateInternal3(self, mpn)
-		end
 	end,
 
 	children = {
@@ -273,14 +258,8 @@ local PlayerFrame = function(player)
 	}
 end
 
--- load SelectProfileFrames for both
-if AutoStyle=="none" or AutoStyle=="versus" then
+
 	t.children[#t.children+1] = PlayerFrame(PLAYER_1)
 	t.children[#t.children+1] = PlayerFrame(PLAYER_2)
-
--- load only for the MasterPlayerNumber
-else
-	t.children[#t.children+1] = PlayerFrame(mpn)
-end
 
 return t
