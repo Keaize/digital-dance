@@ -17,16 +17,14 @@ local t = Def.ActorFrame{
 	--Player 1 Stats BG
 	Def.Quad{
 		InitCommand=function(self)
-			self:zoomto(160,_screen.h):xy(80, _screen.h/2):diffuse(color("#00000099"))
-			if ThemePrefs.Get("RainbowMode") then self:diffuse(color("#000000dd")) end
+			self:zoomto(160,_screen.h):xy(80, _screen.h/2):diffuse(color("#000000CC"))
 		end,
 	},
 
 	--Player 2 Stats BG
 	Def.Quad{
 		InitCommand=function(self)
-			self:zoomto(160,_screen.h):xy(_screen.w-80, _screen.h/2):diffuse(color("#00000099"))
-			if ThemePrefs.Get("RainbowMode") then self:diffuse(color("#000000dd")) end
+			self:zoomto(160,_screen.h):xy(_screen.w-80, _screen.h/2):diffuse(color("#000000CC"))
 		end,
 	}
 }
