@@ -4,6 +4,10 @@ local p = PlayerNumber:Reverse()[player]
 
 local text_table, marquee_index
 
+if GAMESTATE:IsCourseMode() then
+return Def.ActorFrame { }
+end
+
 return Def.ActorFrame{
 	Name="StepArtistAF_" .. pn,
 	InitCommand=cmd(draworder,1),
@@ -33,13 +37,13 @@ return Def.ActorFrame{
 
 		if player == PLAYER_1 then
 
-			self:y(_screen.cy + 44)
-			self:x( _screen.cx - (IsUsingWideScreen() and 356 or 346))
+			self:y(IsUsingWideScreen() and _screen.cy + 71 or _screen.cy + 153)
+			self:x( _screen.cx - (IsUsingWideScreen() and 435 or 306))
 
 		elseif player == PLAYER_2 then
 
-			self:y(_screen.cy + 97)
-			self:x( _screen.cx - 210)
+			self:y(IsUsingWideScreen() and _screen.cy + 11 or _screen.cy + 13)
+			self:x( _screen.cx - (IsUsingWideScreen() and -153 or 306))
 		end
 
 		if GAMESTATE:IsHumanPlayer(player) then
@@ -50,10 +54,14 @@ return Def.ActorFrame{
 	-- colored background quad
 	Def.Quad{
 		Name="BackgroundQuad",
-		InitCommand=cmd(zoomto, 175, _screen.h/28; x, 113; diffuse, DifficultyIndexColor(1) ),
+		InitCommand=cmd(zoomto, 265, _screen.h/28; x, 141; diffuse, DifficultyIndexColor(1) ),
 		StepsHaveChangedCommand=function(self)
+			if IsUsingWideScreen() then
+			else
+				self:zoomto(310, _screen.h/28)
+			end
 			local StepsOrTrail = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player) or GAMESTATE:GetCurrentSteps(player)
-
+			
 			if StepsOrTrail then
 				local difficulty = StepsOrTrail:GetDifficulty()
 				self:diffuse( DifficultyColor(difficulty) )
@@ -66,15 +74,20 @@ return Def.ActorFrame{
 	--STEPS label
 	Def.BitmapText{
 		Font="_miso",
-		OnCommand=cmd(diffuse, color("0,0,0,1"); horizalign, left; x, 30; settext, Screen.String("STEPS"))
+		OnCommand=cmd(diffuse, color("0,0,0,1"); horizalign, left; x,IsUsingWideScreen() and 10 or -10; settext, Screen.String("STEPS"))
 	},
 
 	--stepartist text
 	Def.BitmapText{
 		Font="_miso",
-		InitCommand=cmd(diffuse,color("#1e282f"); horizalign, left; x, 75; maxwidth, 115),
+		InitCommand=cmd(diffuse,color("#1e282f"); horizalign, left; x, 55; maxwidth, 218;zoom,0.9),
 		StepsHaveChangedCommand=function(self)
-
+				if IsUsingWideScreen() then
+				else
+					self:x(35)
+					self:maxwidth(285)
+				end
+			
 			local SongOrCourse = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSong()
 			local StepsOrCourse = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSteps(player)
 

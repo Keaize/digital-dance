@@ -1,5 +1,6 @@
 local text = ""
 local SongNumberInCourse = 0
+local player = ...
 
 if GAMESTATE:IsCourseMode() then
 
@@ -11,7 +12,6 @@ elseif not PREFSMAN:GetPreference("EventMode") then
 else
 	text = THEME:GetString("Stage", "Event")
 end
-
 
 -- get the PlayerOptions string for any human players and store it now
 -- we'll retreive it the next time ScreenSelectMusic loads and re-apply those same mods
@@ -82,10 +82,10 @@ local t = Def.ActorFrame{
 		OnCommand=cmd(sleep,0.4; diffuse, GetCurrentColor(); Center; rotationz,10; diffusealpha,0; zoom,0; diffusealpha,1; decelerate,0.8; rotationz,0; zoom,0.9; diffusealpha,0)
 	},
 
-	LoadFont("_wendy small")..{
+	LoadFont("_edit undo brk")..{
 		Text=text,
 		InitCommand=cmd(Center; diffusealpha,0; shadowlength,1),
-		OnCommand=cmd(accelerate, 0.5; diffusealpha, 1; sleep, 0.66; accelerate, 0.33; zoom, 0.4; y, _screen.h-30),
+		OnCommand=cmd(accelerate, 0.5; diffusealpha, 1; sleep, 0.66; accelerate, 0.33; zoom, 0; y, _screen.h-30),
 		CurrentSongChangedMessageCommand=function(self)
 			if GAMESTATE:IsCourseMode() then
 				InitializeMeasureCounterAndModsLevel()

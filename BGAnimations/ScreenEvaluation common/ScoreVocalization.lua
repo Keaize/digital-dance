@@ -62,7 +62,7 @@ return Def.Actor{
 			-- by now, a voice should be chosen...
 			-- but does the necessary directory actually exist in ./Other/Vocalize/ ?
 			-- the Vocalization table should contain all available voices (when ./Scripts/ was first loaded)
-			-- so check if the chosen voice was found (see: ./Scripts/SL-Vocalize.lua)
+			-- so check if the chosen voice was found (see: ./Scripts/DD-Vocalize.lua)
 			if Vocalization[voice] then
 
 			    local number = Digits[ActiveDigit][1]

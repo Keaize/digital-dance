@@ -1,12 +1,11 @@
 local player = ...
 local pn = ToEnumShortString(player)
 
-local judgments = { "W1", "W2", "W3", "W4", "W5", "Miss", "MissBecauseHeld" }
+local judgments = { "W1", "W2", "W3", "W4", "W5", "Miss" }
 local TNSNames = {}
 
+-- It's looking at what GameMode is happening here. Please to fix later.
 local mode = ""
-if SL.Global.GameMode == "StomperZ" then mode = "StomperZ"
-elseif SL.Global.GameMode == "ECFA" then mode = "ECFA" end
 
 
 -- tap note types

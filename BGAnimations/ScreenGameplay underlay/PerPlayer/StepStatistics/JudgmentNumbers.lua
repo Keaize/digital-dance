@@ -37,6 +37,9 @@ for index, window in ipairs(TapNoteScores) do
 			if params.Player ~= player then return end
 			if params.HoldNoteScore then return end
 
+			local health_state = GAMESTATE:GetPlayerState(params.Player):GetHealthState()
+			if health_state == 'HealthState_Dead' then return end
+
 			if params.TapNoteScore and ToEnumShortString(params.TapNoteScore) == window then
 				TapNoteJudgments[window] = TapNoteJudgments[window] + 1
 				self:settext( string.format("%04d", TapNoteJudgments[window]) )
@@ -67,7 +70,10 @@ for index, RCType in ipairs(RadarCategories) do
 		JudgmentMessageCommand=function(self, params)
 			if params.Player ~= player then return end
 			if not params.TapNoteScore then return end
-
+			
+			local health_state = GAMESTATE:GetPlayerState(params.Player):GetHealthState()
+			if health_state == 'HealthState_Dead' then return end
+			
 			if RCType=="Mines" and params.TapNoteScore == "TapNoteScore_AvoidMine" then
 				RadarCategoryJudgments.Mines = RadarCategoryJudgments.Mines + 1
 				self:settext( string.format("%03d", RadarCategoryJudgments.Mines) )

@@ -9,7 +9,6 @@ local RestartOnMissedTarget = PREFSMAN:GetPreference("EventMode") and SL[pn].Act
 -- if nobody wants us, we won't appear
 if (SL[pn].ActiveModifiers.TargetStatus == "Disabled"
 or SL[pn].ActiveModifiers.TargetStatus == "Step Statistics"
-or SL.Global.GameMode == "Casual"
 or SL.Global.Gamestate.Style == "double")
 and (not SL[pn].ActiveModifiers.TargetScore)
 then
@@ -414,15 +413,15 @@ if (SL[pn].ActiveModifiers.TargetStatus == "Target Score Graph") then
 
 			-- pretty explody thingies for grade changes
 
-			LoadActor(THEME:GetPathB("ScreenGameplay","in/"..ThemePrefs.Get("VisualTheme").."_splode"))..{
+			LoadActor(THEME:GetPathB("ScreenGameplay","in/Arrows_splode_splode"))..{
 				InitCommand=cmd(diffusealpha,0),
 				GradeChangedCommand=cmd(y, getYFromGradeEnum(currentGrade); diffuse, GetCurrentColor(); rotationz,10; diffusealpha,0; zoom,0; diffusealpha,0.9; linear,0.6; rotationz,0; zoom,0.5; diffusealpha,0),
 			},
-			LoadActor(THEME:GetPathB("ScreenGameplay","in/"..ThemePrefs.Get("VisualTheme").."_splode"))..{
+			LoadActor(THEME:GetPathB("ScreenGameplay","in/Arrows_splode_splode"))..{
 				InitCommand=cmd(diffusealpha,0),
 				GradeChangedCommand=cmd(y, getYFromGradeEnum(currentGrade); diffuse, GetCurrentColor(); rotationy,180; rotationz,-10; diffusealpha,0; zoom,0.2; diffusealpha,0.8; decelerate,0.6; rotationz,0; zoom,0.7; diffusealpha,0),
 			},
-			LoadActor(THEME:GetPathB("ScreenGameplay","in/"..ThemePrefs.Get("VisualTheme").."_minisplode"))..{
+			LoadActor(THEME:GetPathB("ScreenGameplay","in/Arrows_minisplode"))..{
 				InitCommand=cmd(diffusealpha,0),
 				GradeChangedCommand=cmd(y, getYFromGradeEnum(currentGrade); diffuse, GetCurrentColor(); rotationz,10; diffusealpha,0; zoom,0; diffusealpha,1; decelerate,0.8; rotationz,0; zoom,0.4; diffusealpha,0),
 			},
@@ -483,28 +482,14 @@ if SL[pn].ActiveModifiers.TargetScore then
 			local zoomF = 0.4
 			local origX = GetNotefieldX(player)
 
-			-- special casing: StomperZ with its receptor positions would appear over the normal pacemaker position
-			if SL.Global.GameMode == "StomperZ" and SL[pn].ActiveModifiers.ReceptorArrowsPosition == "StomperZ" then
-				-- put ourself just over the combo
-				noteY = _screen.cy - 60
-				zoomF = 0.35
+			
+			noteY = 56
+			noteX = GetNotefieldWidth() / 4
+			-- this serendipitiously works for doubles, somehow
 
-				-- copied from MeasureCounter.lua
-				local width = GAMESTATE:GetCurrentStyle(player):GetWidth(player)
-				local NumColumns = GAMESTATE:GetCurrentStyle():ColumnsPerPlayer()
-
-				noteX = (width/NumColumns)
-
-				self:shadowlength(1) -- match other playfield counters
-			else
-				noteY = 56
-				noteX = GetNotefieldWidth() / 4
-				-- this serendipitiously works for doubles, somehow
-
-				-- ugly, ugly, U G L Y antisymmetry kludge
-				if (player ~= PLAYER_1 and isTwoPlayers) then
-					noteX = noteX + 25 -- this gets reversed...
-				end
+			-- ugly, ugly, U G L Y antisymmetry kludge
+			if (player ~= PLAYER_1 and isTwoPlayers) then
+				noteX = noteX + 25 -- this gets reversed...
 			end
 
 			-- flip x-coordinate based on player

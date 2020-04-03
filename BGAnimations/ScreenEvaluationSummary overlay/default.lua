@@ -61,9 +61,7 @@ local t = Def.ActorFrame{
 	}
 }
 
-if SL.Global.GameMode == "Competitive" then
-	t[#t+1] = LoadActor("./LetterGrades.lua")
-end
+t[#t+1] = LoadActor("./LetterGrades.lua")
 
 -- i will increment so that we progress down the screen from top to bottom
 -- first song of the round at the top, more recently played song at the bottom

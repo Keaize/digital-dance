@@ -7,23 +7,44 @@ local GlobalOffsetSeconds = PREFSMAN:GetPreference("GlobalOffsetSeconds")
 
 local RowIndex = 1
 
+if GAMESTATE:IsCourseMode() then
+return Def.ActorFrame { }
+end
+
 return Def.Sprite{
-	Texture=THEME:GetPathB("ScreenSelectMusic", "overlay/PerPlayer/arrow.png"),
+	Texture=THEME:GetPathB("ScreenSelectMusic", "overlay/PerPlayer/highlight.png"),
 	Name="Cursor"..pn,
 	InitCommand=function(self)
+	
 		self:visible( false ):halign( p )
 
-		self:zoom(0.575)
-		self:bounce():effectclock("beatnooffset")
+		self:zoom(1)
+		-- diffuse with white to make it less #OwMyEyes
+		local color = PlayerColor(player)
+		color[4] = 1
+		color[1] = 0.8 * color[1] + 0.2
+		color[2] = 0.8 * color[2] + 0.2
+		color[3] = 0.8 * color[3] + 0.2
+		self:diffuse(color)
+		
 
 		if player == PLAYER_1 then
 			self:x( IsUsingWideScreen() and _screen.cx-330 or 0)
-			self:effectmagnitude(-3,0,0)
+			self:y( IsUsingWideScreen() and 320 or 194)
+			self:effectmagnitude(-6,0,6)
+				if IsUsingWideScreen() then
+				else
+				self:align(-0.44,0.5)
+				end
 
 		elseif player == PLAYER_2 then
-			self:rotationz(180)
-			self:x(IsUsingWideScreen() and _screen.cx-28 or 276)
-			self:effectmagnitude(3,0,0)
+			self:y(IsUsingWideScreen()and 319 or 193)
+			self:effectmagnitude(-6,0,6)
+				if IsUsingWideScreen() then
+					self:align(-12.21,0.49)
+				else
+					self:align(-0.44,0.48)
+				end
 		end
 
 		self:effectperiod(1):effectoffset( -10 * GlobalOffsetSeconds)
@@ -105,7 +126,7 @@ return Def.Sprite{
 			local sdl = self:GetParent():GetParent():GetChild("StepsDisplayList")
 			if sdl then
 				local grid = sdl:GetChild("Grid")
-				self:y(sdl:GetY() + grid:GetY() + grid:GetChild("Blocks_"..RowIndex):GetY() + 1 )
+				self:x(grid:GetChild("Blocks_"..RowIndex):GetY()/0.351 - 40)
 			end
 		end
 	end

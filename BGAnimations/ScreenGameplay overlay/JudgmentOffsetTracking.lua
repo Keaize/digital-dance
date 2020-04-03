@@ -1,6 +1,3 @@
--- don't bother for Casual gamemode
-if SL.Global.GameMode == "Casual" then return end
-
 local player = ...
 local sequential_offsets = {}
 

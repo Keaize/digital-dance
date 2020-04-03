@@ -1,12 +1,23 @@
-local GridColumns = 20
+local GridColumns = 0
 local GridRows = 5
 local GridZoomX = IsUsingWideScreen() and 0.435 or 0.39
 local BlockZoomY = 0.275
 local StepsToDisplay, SongOrCourse, StepsOrTrails
 
+local P1 = GAMESTATE:IsHumanPlayer(PLAYER_1)
+local P2 = GAMESTATE:IsHumanPlayer(PLAYER_2)
+
+local function getInputHandler(actor, player)
+	return (function(event)
+		if event.GameButton == "Start" and event.PlayerNumber == player and GAMESTATE:IsHumanPlayer(event.PlayerNumber) then
+			actor:visible(true)
+		end
+	end)
+end
+
 local t = Def.ActorFrame{
 	Name="StepsDisplayList",
-	InitCommand=cmd(vertalign, top; draworder, 1; xy, _screen.cx-170, _screen.cy + 70),
+	InitCommand=cmd(vertalign, top; draworder, 101; xy, _screen.cx-294, _screen.cy - 154),
 	-- - - - - - - - - - - - - -
 
 	OnCommand=cmd(queuecommand, "RedrawStepsDisplay"),
@@ -34,10 +45,28 @@ local t = Def.ActorFrame{
 						local meter = StepsToDisplay[RowNumber]:GetMeter()
 						local difficulty = StepsToDisplay[RowNumber]:GetDifficulty()
 						self:GetChild("Grid"):GetChild("Meter_"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_1"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_2"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_3"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_4"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_5"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_6"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_7"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_8"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						self:GetChild("Grid"):GetChild("Meter_9"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
 						self:GetChild("Grid"):GetChild("Blocks_"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
 					else
 						-- otherwise, set the meter to an empty string and hide this particular colored BlockRow
 						self:GetChild("Grid"):GetChild("Meter_"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_1"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_2"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_3"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_4"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_5"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_6"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_7"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_8"..RowNumber):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("Meter_9"..RowNumber):playcommand("Unset")
 						self:GetChild("Grid"):GetChild("Blocks_"..RowNumber):playcommand("Unset")
 
 					end
@@ -49,43 +78,17 @@ local t = Def.ActorFrame{
 		end
 	end,
 
-	-- - - - - - - - - - - - - -
-
-	-- background
-	Def.Quad{
-		Name="Background",
-		InitCommand=function(self)
-			self:diffuse(color("#1e282f"))
-			self:zoomto(320, 96)
-			if ThemePrefs.Get("RainbowMode") then
-				self:diffusealpha(0.75)
-			end
-		end
-	},
 }
 
 
 local Grid = Def.ActorFrame{
 	Name="Grid",
-	InitCommand=cmd(horizalign, left; vertalign, top; xy, 8, -52 ),
+	InitCommand=cmd(horizalign, left; vertalign, top; x,IsUsingWideScreen() and -149.5 or -21.5;y,IsUsingWideScreen() and 232 or 106),
 }
 
 
 -- A grid of decorative faux-blocks that will exist
 -- behind the changing difficulty blocks.
-Grid[#Grid+1] = Def.Sprite{
-	Name="BackgroundBlocks",
-	Texture=THEME:GetPathB("ScreenSelectMusic", "overlay/StepsDisplayList/_block.png"),
-
-	InitCommand=cmd(diffuse, color("#182025") ),
-	OnCommand=function(self)
-		local width = self:GetWidth()
-		local height= self:GetHeight()
-		self:zoomto(width * GridColumns * GridZoomX, height * GridRows * BlockZoomY)
-		self:y( 3 * height * BlockZoomY )
-		self:customtexturerect(0, 0, GridColumns, GridRows)
-	end
-}
 
 for RowNumber=1,GridRows do
 
@@ -116,17 +119,131 @@ for RowNumber=1,GridRows do
 			self:customtexturerect(0,0,0,0)
 		end
 	}
+	
+	------------------ stupid extra border stuff for the difficulty numbers---------------------
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_1"..RowNumber,
+		Font="_wendy small",
 
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+			self:horizalign(center)
+			self:y(2)
+			self:x(RowNumber * height/0.35 * BlockZoomY + 2)
+			self:zoom(0.75)
+				if IsUsingWideScreen() then
+					self:visible(P1)
+				else
+					self:visible(true)
+				end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( Color.Black)
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
+		end
+	}
+	
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_2"..RowNumber,
+		Font="_wendy small",
+
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+			self:horizalign(center)
+			self:y(-2)
+			self:x(RowNumber * height/0.35 * BlockZoomY - 2)
+			self:zoom(0.75)
+				if IsUsingWideScreen() then
+					self:visible(P1)
+				else
+					self:visible(true)
+				end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( Color.Black)
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
+		end
+	}
+	
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_3"..RowNumber,
+		Font="_wendy small",
+
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+			self:horizalign(center)
+			self:y(2)
+			self:x(RowNumber * height/0.35 * BlockZoomY-2)
+			self:zoom(0.75)
+				if IsUsingWideScreen() then
+						self:visible(P1)
+					else
+						self:visible(true)
+					end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( Color.Black)
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
+		end
+	}
+	
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_4"..RowNumber,
+		Font="_wendy small",
+
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+			self:horizalign(center)
+			self:y(-2)
+			self:x(RowNumber * height/0.35 * BlockZoomY+2)
+			self:zoom(0.75)
+			if IsUsingWideScreen() then
+					self:visible(P1)
+				else
+					self:visible(true)
+				end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( Color.Black)
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
+		end
+	}
+	
+	----------------- the actual difficulty numbers -------------------
 	Grid[#Grid+1] = Def.BitmapText{
 		Name="Meter_"..RowNumber,
 		Font="_wendy small",
 
 		InitCommand=function(self)
 			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
-			self:horizalign(right)
-			self:y(RowNumber * height * BlockZoomY)
-			self:x( IsUsingWideScreen() and -140 or -126 )
-			self:zoom(0.3)
+			self:horizalign(center)
+			self:x(RowNumber * height/0.35 * BlockZoomY)
+			self:zoom(0.75)
+			if IsUsingWideScreen() then
+					self:visible(P1)
+				else
+					self:visible(true)
+				end
 		end,
 		SetCommand=function(self, params)
 			-- diffuse and set each chart's difficulty meter
@@ -134,7 +251,155 @@ for RowNumber=1,GridRows do
 			self:settext(params.Meter)
 		end,
 		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
+		end
 	}
+	
+	
+	---------------------------- Player 2 numbers oh god oh no please help me -----------------------------------------
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_5"..RowNumber,
+		Font="_wendy small",
+
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+				if IsUsingWideScreen() then
+					self:zoom(0.75)
+					self:visible(P2)
+					self:horizalign(center)
+					self:y(2)
+					self:x(RowNumber * height/0.35 * BlockZoomY + 588)
+				else
+					self:visible(false)
+					self:zoom(0)
+				end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( Color.Black)
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
+		end
+	}
+	
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_6"..RowNumber,
+		Font="_wendy small",
+
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+			
+			if IsUsingWideScreen() then
+					self:horizalign(center)
+					self:y(-2)
+					self:x(RowNumber * height/0.35 * BlockZoomY + 584)
+					self:zoom(0.75)
+					self:visible(P2)
+				else
+					self:visible(false)
+					self:zoom(0)
+				end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( Color.Black)
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
+		end
+	}
+	
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_7"..RowNumber,
+		Font="_wendy small",
+
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+			if IsUsingWideScreen() then
+					self:zoom(0.75)
+					self:visible(P2)
+					self:horizalign(center)
+					self:y(2)
+					self:x(RowNumber * height/0.35 * BlockZoomY+584)
+				else
+					self:visible(false)
+					self:zoom(0)
+				end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( Color.Black)
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
+		end
+	}
+	
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_8"..RowNumber,
+		Font="_wendy small",
+
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+			if IsUsingWideScreen() then
+					self:zoom(0.75)
+					self:visible(P2)
+					self:horizalign(center)
+					self:y(-2)
+					self:x(RowNumber * height/0.35 * BlockZoomY+588)
+				else
+					self:visible(false)
+					self:zoom(0)
+				end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( Color.Black)
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
+		end
+	}
+	
+	----------------- the actual P2 difficulty numbers -------------------
+	Grid[#Grid+1] = Def.BitmapText{
+		Name="Meter_9"..RowNumber,
+		Font="_wendy small",
+
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
+				if IsUsingWideScreen() then
+					self:zoom(0.75)
+					self:visible(P2)
+					self:horizalign(center)
+					self:x(RowNumber * height/0.35 * BlockZoomY + 586)
+				else
+					self:visible(false)
+					self:zoom(0)
+				end
+		end,
+		SetCommand=function(self, params)
+			-- diffuse and set each chart's difficulty meter
+			self:diffuse( DifficultyColor(params.Difficulty) )
+			self:settext(params.Meter)
+		end,
+		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
+		end
+	}
+	
+	
 end
 
 t[#t+1] = Grid

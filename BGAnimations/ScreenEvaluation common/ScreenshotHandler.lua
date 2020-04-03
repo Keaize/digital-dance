@@ -1,6 +1,3 @@
--- if we're in Casual mode, don't let players save screenshots at all
-if SL.Global.GameMode ~= "Casual" then
-
 	-- The code here is only half of what's needed for this screen's ScreenShot animation.
 	--
 	-- The texture that is loaded into this Sprite actor is created via an
@@ -25,9 +22,9 @@ if SL.Global.GameMode ~= "Casual" then
 		CodeMessageCommand=function(self, params)
 
 			if params.Name == "Screenshot" then
-				-- organize Screenshots take using Simply Love into directories, like...
-				-- ./Screenshots/Simply_Love/2015/06-June/2015-06-05_121708.png
-				local prefix = "Simply_Love/" .. Year() .. "/"
+				-- organize Screenshots taken using this theme into directories, like...
+				-- ./Screenshots/Digital Dance/2019/07-July/2019-07-09_121708.png
+				local prefix = "Digital_Dance/" .. Year() .. "/"
 				prefix = prefix .. string.format("%02d", tostring(MonthOfYear()+1)) .. "-" .. THEME:GetString("Months", "Month"..MonthOfYear()+1) .. "/"
 
 				local success, path = SaveScreenshot(params.PlayerNumber, false, true, prefix)
@@ -72,4 +69,3 @@ if SL.Global.GameMode ~= "Casual" then
 			player_that_screenshot_is_for = nil
 		end
 	}
-end

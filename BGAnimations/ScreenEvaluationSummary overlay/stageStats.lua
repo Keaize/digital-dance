@@ -148,21 +148,18 @@ for player in ivalues(Players) do
 		end
 	}
 
-	-- letter grade
-	if SL.Global.GameMode ~= "StomperZ" then
-		PlayerStatsAF[#PlayerStatsAF+1] = Def.ActorProxy{
-			InitCommand=function(self)
-				self:zoom(WideScale(0.275,0.3)):x( WideScale(194,250) * (player==PLAYER_1 and -1 or 1) ):y(-6)
-			end,
-			DrawStageCommand=function(self)
-				if playerStats and grade then
-					self:SetTarget( LetterGradesAF:GetChild(grade) ):visible(true)
-				else
-					self:visible(false)
-				end
-			end
-		}
+PlayerStatsAF[#PlayerStatsAF+1] = Def.ActorProxy{
+	InitCommand=function(self)
+		self:zoom(WideScale(0.275,0.3)):x( WideScale(194,250) * (player==PLAYER_1 and -1 or 1) ):y(-6)
+	end,
+	DrawStageCommand=function(self)
+		if playerStats and grade then
+			self:SetTarget( LetterGradesAF:GetChild(grade) ):visible(true)
+		else
+			self:visible(false)
+		end
 	end
+}
 
 	-- difficulty meter
 	PlayerStatsAF[#PlayerStatsAF+1] = LoadFont("_wendy small")..{
@@ -203,13 +200,7 @@ for player in ivalues(Players) do
 					if val then self:settext(val) end
 					local DecentsWayOffs = SL.Global.Stages.Stats[StageNum].DecentsWayOffs
 
-					if SL.Global.GameMode == "StomperZ" then
-						self:diffuse( SL.JudgmentColors.StomperZ[i] )
-					elseif SL.Global.GameMode == "ECFA" then
-						self:diffuse( SL.JudgmentColors.ECFA[i] )
-					else
-						self:diffuse( SL.JudgmentColors.Competitive[i] )
-					end
+					self:diffuse( SL.JudgmentColors.Competitive[i] )
 
 					if DecentsWayOffs == "Decents Only" and i == 5 then
 						self:visible(false)

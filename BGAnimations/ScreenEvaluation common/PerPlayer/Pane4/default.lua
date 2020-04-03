@@ -15,9 +15,9 @@ local abbreviations = {
 }
 
 -- ---------------------------------------------
--- if players have disabled W4 or W4+W5, there will be a smaller pool
--- of judgments that could have possibly been earned
-local num_judgments_available = (SL.Global.ActiveModifiers.DecentsWayOffs=="Decents Only" and 4) or (SL.Global.ActiveModifiers.DecentsWayOffs=="Off" and 3) or 5
+-- I don't know why this is a thing
+-- Like really wtf stop
+local num_judgments_available = 5
 local worst_window = SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..num_judgments_available]
 
 -- ---------------------------------------------

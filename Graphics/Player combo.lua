@@ -16,9 +16,6 @@ return Def.ActorFrame {
 		kids = self:GetChildren()
 	end,
 	OnCommand=function(self)
-		if SL.Global.GameMode == "StomperZ" then
-			self:y(-20)
-		end
 	end,
 
 	ComboCommand=function(self, param)

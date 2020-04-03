@@ -1,5 +1,7 @@
 local Players = GAMESTATE:GetHumanPlayers()
-local NumPanes = SL.Global.GameMode=="Casual" and 1 or 5
+local NumPanes = 5
+
+
 
 -- Start by loading actors that would be the same whether 1 or 2 players are joined.
 local t = Def.ActorFrame{
@@ -27,9 +29,31 @@ local t = Def.ActorFrame{
 	-- store some attributes of this playthrough of this song in the global SL table
 	-- for later retrieval on ScreenEvaluationSummary
 	LoadActor("./GlobalStorage.lua"),
+	
 }
 
-
+-- This is to show style icons based on style type (1-2 Player vs Double)
+if GAMESTATE:GetCurrentStyle():GetStyleType() == "StyleType_OnePlayerTwoSides" then
+	t[#t+1] = LoadActor ("./4panels.png") .. {
+		InitCommand=function(self)
+			self:zoom(0.15)
+			self:xy(550,16)
+		end
+	}
+	t[#t+1] = LoadActor ("./4panels.png") .. {
+		InitCommand=function(self)
+			self:zoom(0.15)
+			self:xy(585,16)
+		end
+	}
+else
+	t[#t+1] = LoadActor ("./4panels.png") .. {
+		InitCommand=function(self)
+			self:zoom(0.15)
+			self:xy(550,16)
+		end
+	}
+	end
 
 -- Then, load the player-specific actors.
 for player in ivalues(Players) do
@@ -58,7 +82,10 @@ for player in ivalues(Players) do
 		LoadActor("./PerPlayer/Difficulty.lua", player),
 
 		-- Record Texts (Machine and/or Personal)
-		LoadActor("./PerPlayer/RecordTexts.lua", player)
+		LoadActor("./PerPlayer/RecordTexts.lua", player),
+		
+		-- FA Gauntlet Score
+		LoadActor("./PerPlayer/FAGauntlet.lua", player),
 	}
 
 	-- the lower half of ScreenEvaluation
@@ -78,9 +105,6 @@ for player in ivalues(Players) do
 			Name="LowerQuad",
 			InitCommand=function(self)
 				self:diffuse(color("#1E282F")):y(_screen.cy+34):zoomto( 300,180 )
-				if ThemePrefs.Get("RainbowMode") then
-					self:diffusealpha(0.9)
-				end
 			end,
 			-- this background Quad may need to shrink and expand if we're playing double
 			-- and need more space to accommodate more columns of arrows;  these commands

@@ -125,12 +125,14 @@ local pd = Def.ActorFrame{
 		end
 
 		if player == PLAYER_1 then
-			self:x(_screen.w * 0.25 - 5)
+			self:x(IsUsingWideScreen() and _screen.w * 0.25 - 5 or 160)
+			self:y(IsUsingWideScreen() and 207 or 239)
 		elseif player == PLAYER_2 then
-			self:x( _screen.w * 0.75 + 5)
+			self:x(IsUsingWideScreen() and _screen.w * 0.25 + 582 or 490)
+			self:y(IsUsingWideScreen() and _screen.h/2 - 33 or 239)
 		end
 
-		self:y(_screen.h/2 + 5)
+		
 	end,
 
 	PlayerJoinedMessageCommand=function(self, params)
@@ -185,8 +187,15 @@ local pd = Def.ActorFrame{
 -- colored background for chart statistics
 pd[#pd+1] = Def.Quad{
 	Name="BackgroundQuad",
-	InitCommand=cmd(zoomto, _screen.w/2-10, _screen.h/8; y, _screen.h/2 - 67 ),
+	InitCommand=cmd(zoomto, _screen.w/2-161, _screen.h/8+42; y, _screen.h/2 - 48 ; x, -75),
 	SetCommand=function(self, params)
+		if IsUsingWideScreen() then
+		else
+		self:zoomto(310,70)
+		self:x(-5)
+		self:y(174)
+		end
+		
 		if GAMESTATE:IsHumanPlayer(player) then
 			local StepsOrTrail = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player) or GAMESTATE:GetCurrentSteps(player)
 
@@ -246,35 +255,19 @@ for key, item in pairs(PaneItems) do
 	}
 end
 
--- chart difficulty meter
-pd[#pd+1] = Def.BitmapText{
-	Font="_wendy small",
-	Name="DifficultyMeter",
-	InitCommand=cmd(horizalign, right; diffuse, Color.Black; xy, _screen.w/4 - 10, _screen.h/2 - 65; queuecommand, "Set"),
-	SetCommand=function(self)
-		local SongOrCourse = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse()) or GAMESTATE:GetCurrentSong()
-		if not SongOrCourse then
-			self:settext("")
-		else
-			local StepsOrTrail = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player) or GAMESTATE:GetCurrentSteps(player)
-			local meter = StepsOrTrail and StepsOrTrail:GetMeter()
-			self:settext( meter and meter or  "?" )
-		end
-	end
-}
 
 --MACHINE high score
 pd[#pd+1] = Def.BitmapText{
 	Font="_miso",
 	Name="MachineHighScore",
-	InitCommand=cmd(x, highscoreX; y, 156; zoom, zoom_factor; diffuse, Color.Black; halign, 1 )
+	InitCommand=cmd(x,IsUsingWideScreen() and highscoreX-102 or highscoreX+25; y,IsUsingWideScreen() and 210 or 171; zoom, zoom_factor; diffuse, Color.Black; halign, 1 )
 }
 
 --MACHINE highscore name
 pd[#pd+1] = Def.BitmapText{
 	Font="_miso",
 	Name="MachineHighScoreName",
-	InitCommand=cmd(x, highscorenameX; y, 156; zoom, zoom_factor; diffuse, Color.Black; halign, 0; maxwidth, 80)
+	InitCommand=cmd(x,IsUsingWideScreen() and highscorenameX-115 or highscorenameX+40; y,IsUsingWideScreen() and 210 or 171; zoom, zoom_factor; diffuse, Color.Black; halign, 0; maxwidth, 80)
 }
 
 
@@ -282,14 +275,28 @@ pd[#pd+1] = Def.BitmapText{
 pd[#pd+1] = Def.BitmapText{
 	Font="_miso",
 	Name="PlayerHighScore",
-	InitCommand=cmd(x, highscoreX; y, 176; zoom, zoom_factor; diffuse, Color.Black; halign, 1 )
+	InitCommand=cmd(x,IsUsingWideScreen() and highscoreX-102 or highscoreX+85; y,IsUsingWideScreen() and 228 or 190; zoom, zoom_factor; diffuse, Color.Black; halign, 1 )
 }
 
 --PLAYER PROFILE highscore name
 pd[#pd+1] = Def.BitmapText{
 	Font="_miso",
 	Name="PlayerHighScoreName",
-	InitCommand=cmd(x, highscorenameX; y, 176; zoom, zoom_factor; diffuse, Color.Black; halign, 0; maxwidth, 80)
+	InitCommand=cmd(x,IsUsingWideScreen() and highscorenameX-115 or highscorenameX+40; y,IsUsingWideScreen() and 228 or 210; zoom, zoom_factor; diffuse, Color.Black; halign, 0; maxwidth, 80)
+}
+
+-- Machine best label
+pd[#pd+1] = Def.BitmapText{
+	Font="_miso",
+	Text="Machine Best:",
+	InitCommand=cmd(x,IsUsingWideScreen() and highscoreX-155 or highscoreX+60; y,IsUsingWideScreen() and 210 or 154; zoom, zoom_factor; diffuse, Color.Black; halign, 1 )
+}
+
+-- Personal best label
+pd[#pd+1] = Def.BitmapText{
+	Font="_miso",
+	Text="Personal Best:",
+	InitCommand=cmd(x,IsUsingWideScreen() and highscoreX-155 or highscoreX+38; y,IsUsingWideScreen() and 228 or 190; zoom, zoom_factor; diffuse, Color.Black; halign, 1 )
 }
 
 return pd

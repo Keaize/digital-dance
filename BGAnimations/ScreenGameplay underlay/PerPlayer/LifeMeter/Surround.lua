@@ -20,7 +20,7 @@ local af = Def.ActorFrame{
 }
 
 -- if double style, we want two quads flanking the left/right sides of the screen that move in unison
-if SL.Global.Gamestate.Style == "double" then
+if GAMESTATE:GetCurrentStyle():GetName():gsub("8","") == "double" then
 	af[#af+1] = Def.Quad{
 		Name="Left",
 		InitCommand=function(self)
@@ -59,9 +59,9 @@ else
 				:zoomto( _screen.w/2, _screen.h-80 )
 
 			if player == PLAYER_1 then
-				self:horizalign(left):diffuse(0.24,0.24,0.24,1):faderight(0.0):xy(0, 80)
+				self:horizalign(left):diffuse(0.2,0.2,0.2,1):faderight(0.8):xy(0, 80)
 			else
-				self:horizalign(right):diffuse(0.24,0.24,0.24,1):fadeleft(0.0):xy(_screen.w, 80)
+				self:horizalign(right):diffuse(0.2,0.2,0.2,1):fadeleft(0.8):xy(_screen.w, 80)
 			end
 		end,
 		ChangeSizeCommand=function(self, params)

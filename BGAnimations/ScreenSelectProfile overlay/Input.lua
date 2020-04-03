@@ -1,6 +1,5 @@
 local af = ...
 
-local AutoStyle = ThemePrefs.Get("AutoStyle")
 local mpn = GAMESTATE:GetMasterPlayerNumber()
 
 local Handle = {}

@@ -38,7 +38,7 @@ return Def.Actor{
 	end,
 	ApplyModsCommand=function(self)
 		if PlayerThatLateJoined then
-			-- ApplyMods() is defined at the bottom of ./Scripts/SL-PlayerOptions.lua
+			-- ApplyMods() is defined at the bottom of ./Scripts/DD-PlayerOptions.lua
 			ApplyMods(PlayerThatLateJoined)
 			-- and reset this back to nil... just in case...
 			PlayerThatLateJoined = nil

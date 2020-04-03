@@ -2,26 +2,54 @@ local player = ...
 local pn = ToEnumShortString(player)
 local p = PlayerNumber:Reverse()[player]
 local show = false
+local nsj = GAMESTATE:GetNumSidesJoined()
 
 local function getInputHandler(actor)
     return (function (event)
-        if event.GameButton == "Select" and event.PlayerNumber == player then
-            if event.type == "InputEventType_FirstPress" then
-                show = true
-                actor:queuecommand("UpdateGraphState")
-            elseif event.type == "InputEventType_Release" then
+	if event.GameButton == "MenuLeft" and event.PlayerNumber == player and GAMESTATE:IsHumanPlayer(event.PlayerNumber) and nsj == 1 then
+        if event.type == "InputEventType_FirstPress" then
                 show = false
                 actor:queuecommand("UpdateGraphState")
-            end
-        end
+		elseif event.type == "InputEventType_Release" or not GAMESTATE:IsHumanPlayer(event.PlayerNumber) then
+                show = true
+                actor:queuecommand("UpdateGraphState")
+		end
+	end
+	if event.GameButton == "MenuRight" and event.PlayerNumber == player and GAMESTATE:IsHumanPlayer(event.PlayerNumber) and nsj == 1 then
+        if event.type == "InputEventType_FirstPress" then
+                show = false
+                actor:queuecommand("UpdateGraphState")
+		elseif event.type == "InputEventType_Release" or not GAMESTATE:IsHumanPlayer(event.PlayerNumber) then
+                show = true
+                actor:queuecommand("UpdateGraphState")
+		end
+	end
+	if event.GameButton == "MenuLeft" and nsj == 2 then
+        if event.type == "InputEventType_FirstPress" then
+                show = false
+                actor:queuecommand("UpdateGraphState")
+		elseif event.type == "InputEventType_Release" then
+                show = true
+                actor:queuecommand("UpdateGraphState")
+		end
+	end
+	if event.GameButton == "MenuRight" and nsj == 2 then
+        if event.type == "InputEventType_FirstPress" then
+                show = false
+                actor:queuecommand("UpdateGraphState")
+		elseif event.type == "InputEventType_Release" then
+                show = true
+                actor:queuecommand("UpdateGraphState")
+		end
+	end
 
         return false
     end)
 end
 
-local bannerWidth = 418
-local bannerHeight = 164
-local padding = 10
+local bannerWidth = 370
+local bannerHeight = 160
+local padding = 12
 
 return Def.ActorFrame {
     -- song and course changes
@@ -34,17 +62,28 @@ return Def.ActorFrame {
 
         if IsUsingWideScreen() then
             zoom = 0.7655
-            xPos = 170
+            xPos = 293
         else
-            zoom = 0.75
-            xPos = 166
+            zoom = 0.895
+            xPos = 165
         end
-        
-        self:zoom(zoom)
-        self:xy(_screen.cx - xPos - ((bannerWidth / 2 - padding) * zoom), 112 - ((bannerHeight / 2 - padding) * zoom))
+		
+		self:zoom(zoom)
+        self:x(_screen.cx - xPos - ((bannerWidth / 2 - padding) * zoom))
+		self:y(IsUsingWideScreen() and 275 - ((bannerHeight / 2 - padding) * zoom) or 359 - ((bannerHeight / 2 - padding) * zoom))
 
-        if (player == PLAYER_2) then
-            self:addy((bannerHeight / 2 - (padding * 0.5)) * zoom)
+        if (player == PLAYER_1 and GAMESTATE:IsHumanPlayer(PLAYER_1)) then
+            show = true
+        end
+
+        if (player == PLAYER_2 and GAMESTATE:IsHumanPlayer(PLAYER_2)) then
+            show = true
+            if IsUsingWideScreen() then
+				self:addx(587)
+			else
+				--self:addx(330)
+				self:addy(-80)
+			end
         end
 
         self:diffusealpha(0)
@@ -60,6 +99,13 @@ return Def.ActorFrame {
             self:queuecommand("UpdateGraphState")
         end
     end,
+
+    PlayerJoinedMessageCommand=function(self, params)
+        nsj = GAMESTATE:GetNumSidesJoined()
+		if params.Player == player then
+            self:playcommand("Init")
+		end
+	end,
 
     UpdateGraphStateCommand=function(self, params)
         if show and not GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentSong() then
@@ -78,7 +124,7 @@ return Def.ActorFrame {
 
     Def.Quad {
         InitCommand=function(self)
-            self:zoomto(bannerWidth - (padding * 2), 20)
+            self:zoomto(bannerWidth - (padding * 2)+1, 20)
                 :diffuse(color("#000000"))
                 :diffusealpha(0.8)
                 :align(0, 0)

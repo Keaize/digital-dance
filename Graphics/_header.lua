@@ -7,25 +7,18 @@ return Def.ActorFrame{
 	Def.Quad{
 		InitCommand=function(self)
 			self:zoomto(_screen.w, 32):vertalign(top):x(_screen.cx)
-			if ThemePrefs.Get("RainbowMode") then
-				self:diffuse(dark)
-			else
-				self:diffuse(light)
-			end
+			self:diffuse(light)
 		end,
 		ScreenChangedMessageCommand=function(self)
 			local topscreen = SCREENMAN:GetTopScreen():GetName()
-			if SL.Global.GameMode == "Casual" and (topscreen == "ScreenEvaluationStage" or topscreen == "ScreenEvaluationSummary") then
-				self:diffuse(dark)
-			end
 		end,
 	},
 
 	Def.BitmapText{
 		Name="HeaderText",
-		Font="_wendy small",
+		Font="_edit undo brk",
 		Text=ScreenString("HeaderText"),
-		InitCommand=cmd(diffusealpha,0; zoom,WideScale(0.5,0.6); horizalign, left; xy, 10, 15 ),
+		InitCommand=cmd(diffusealpha,0; zoom,WideScale(0.6,0.7); horizalign, left; xy, 10, 13 ),
 		OnCommand=cmd(sleep, 0.1; decelerate,0.33; diffusealpha,1),
 		OffCommand=cmd(accelerate,0.33; diffusealpha,0)
 	}

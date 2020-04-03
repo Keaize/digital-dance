@@ -28,7 +28,8 @@ end
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
-		self:xy(_screen.cx-170, _screen.cy + 40)
+		self:x(IsUsingWideScreen() and _screen.cx-268 or _screen.cx-150)
+		self:y(_screen.cy + 30)
 	end,
 
 	---------------------------------------------------------------------
@@ -64,12 +65,8 @@ local af = Def.ActorFrame{
 	-- gray background Quad
 	Def.Quad{
 		InitCommand=function(self)
-			self:diffuse(color("#1e282f")):zoomto(320, 96)
-				:xy(0, 30)
-
-			if ThemePrefs.Get("RainbowMode") then
-				self:diffusealpha(0.75)
-			end
+			self:diffuse(color("#1e282f")):zoomto(267, 96)
+				:xy(-26, 30)
 		end
 	},
 }
@@ -128,7 +125,7 @@ af[#af+1] = Def.CourseContentsList {
 			InitCommand=function(self)
 				self:xy(-160, 0)
 					:horizalign(left)
-					:maxwidth(240)
+					:maxwidth(170)
 			end,
 			SetSongCommand=function(self, params)
 				if params.Song then
@@ -143,7 +140,7 @@ af[#af+1] = Def.CourseContentsList {
 		Def.BitmapText{
 			Font="_miso",
 			InitCommand=function(self)
-				self:xy(-170, 0):horizalign(right)
+				self:xy(-180, 0):horizalign(right)
 			end,
 			SetSongCommand=function(self, params)
 				if params.PlayerNumber ~= PLAYER_1 then return end
@@ -156,7 +153,7 @@ af[#af+1] = Def.CourseContentsList {
 		Def.BitmapText{
 			Font="_miso",
 			InitCommand=function(self)
-				self:xy(114,0):horizalign(right)
+				self:xy(62,0):horizalign(right)
 			end,
 			SetSongCommand=function(self, params)
 				if params.PlayerNumber ~= PLAYER_2 then return end

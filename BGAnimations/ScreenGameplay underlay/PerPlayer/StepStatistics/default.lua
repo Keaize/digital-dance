@@ -4,7 +4,6 @@ local pn = ToEnumShortString(player)
 -- if the conditions aren't right, don't bother
 if SL[pn].ActiveModifiers.TargetStatus ~= "Step Statistics"
 or SL.Global.Gamestate.Style ~= "single"
-or SL.Global.GameMode == "Casual"
 or GAMESTATE:GetCurrentStyle():GetStepsType() == "StepsType_Dance_Solo"
 or (PREFSMAN:GetPreference("Center1Player") and not IsUsingWideScreen())
 then
@@ -36,5 +35,6 @@ return Def.ActorFrame{
 	LoadActor("./BackgroundAndBanner.lua", player),
 	LoadActor("./JudgmentLabels.lua", player),
 	LoadActor("./JudgmentNumbers.lua", player),
-	LoadActor("./DensityGraphs/default.lua", player),
+	LoadActor("./DensityGraph.lua", player),
+	LoadActor("./Score.lua", player),
 }

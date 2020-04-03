@@ -2,9 +2,6 @@ local player = ...
 local pn = ToEnumShortString(player)
 local mods = SL[pn].ActiveModifiers
 
--- don't allow SubtractiveScoring to appear in Casual gamemode via profile settings
-if SL.Global.GameMode == "Casual" then return end
-
 if mods.SubtractiveScoring then
 
 	local style = ToEnumShortString(GAMESTATE:GetCurrentStyle():GetStyleType())
@@ -14,10 +11,7 @@ if mods.SubtractiveScoring then
 	-- metrics on Player positioning
 	local x_position = GetNotefieldX( player )
 
-	-- a flag to determine if we are using a GameMode that utilizes FA+ timing windows
-	local the_metrics = SL.Metrics[SL.Global.GameMode]
-	local FAplus = (the_metrics.PercentScoreWeightW1 == the_metrics.PercentScoreWeightW2)
-	local undesirable_judgment = FAplus and "W3" or "W2"
+	
 
 	-- flag to determine whether to bother to continue counting excellents
 	-- or whether to just display percent away from 100%

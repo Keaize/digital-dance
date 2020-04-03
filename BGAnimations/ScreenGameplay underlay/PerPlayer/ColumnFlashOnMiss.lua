@@ -1,6 +1,3 @@
--- don't allow ColumnFlashOnMiss to appear in Casual gamemode via profile settings
-if SL.Global.GameMode == "Casual" then return end
-
 local player = ...
 local mods = SL[ToEnumShortString(player)].ActiveModifiers
 
@@ -11,7 +8,7 @@ if mods.ColumnFlashOnMiss then
 	local style = GAMESTATE:GetCurrentStyle(player)
 	local width = style:GetWidth(player)
 
-	local y_offset = SL.Global.GameMode == "StomperZ" and 40 or 80
+	local y_offset = 80
 
 	local af = Def.ActorFrame{
 		InitCommand=function(self)

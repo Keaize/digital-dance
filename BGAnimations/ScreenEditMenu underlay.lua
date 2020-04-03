@@ -2,9 +2,9 @@
 -- because, otherwise, it can persist from editing one song with a
 -- ratemod applied into another, different song.
 --
--- see: OptionRowSongMusicRate() in ./Scripts/SL-PlayerOptions.lua
+-- see: OptionRowSongMusicRate() in ./Scripts/DD-PlayerOptions.lua
 GAMESTATE:ApplyGameCommand("mod,1.0xmusic")
-SL.Global.ActiveModifiers.MusicRate = 1
+SL.Global.ActiveModifiers.MusicRateEdit = 1
 
 
 -- down lower in this file, we loop seven times to create seven "rows" of grey quads

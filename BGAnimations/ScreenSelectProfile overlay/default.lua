@@ -1,3 +1,4 @@
+
 local GetLocalProfiles = function()
 	local t = {}
 
@@ -252,12 +253,11 @@ local PlayerFrame = function(player)
 
 			LoadFont("_miso")..{
 				Name='SelectedProfileText',
-				InitCommand=cmd(y,160; zoom, 1.35; shadowlength, ThemePrefs.Get("RainbowMode") and 0.5 or 0)
+				InitCommand=cmd(y,160; zoom, 1.35; shadowlength, 0)
 			}
 		}
 	}
 end
-
 
 	t.children[#t.children+1] = PlayerFrame(PLAYER_1)
 	t.children[#t.children+1] = PlayerFrame(PLAYER_2)

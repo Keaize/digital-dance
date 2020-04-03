@@ -23,7 +23,7 @@ local Offset, CurrentSecond, TimingWindow, x, y, c, r, g, b
 -- ---------------------------------------------
 -- if players have disabled W4 or W4+W5, there will be a smaller pool
 -- of judgments that could have possibly been earned
-local num_judgments_available = (SL.Global.ActiveModifiers.DecentsWayOffs=="Decents Only" and 4) or (SL.Global.ActiveModifiers.DecentsWayOffs=="Off" and 3) or 5
+local num_judgments_available = 5
 local worst_window = SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..num_judgments_available]
 -- ---------------------------------------------
 
@@ -41,7 +41,7 @@ for t in ivalues(sequential_offsets) do
 	x = scale(CurrentSecond, FirstSecond, TotalSeconds + 0.05, 0, GraphWidth)
 
 	if Offset ~= "Miss" then
-		-- DetermineTimingWindow() is defined in ./Scripts/SL-Helpers.lua
+		-- DetermineTimingWindow() is defined in ./Scripts/DD-Helpers.lua
 		TimingWindow = DetermineTimingWindow(Offset)
 		y = scale(Offset, worst_window, -worst_window, 0, GraphHeight)
 

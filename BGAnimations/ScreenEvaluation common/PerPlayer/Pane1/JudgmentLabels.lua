@@ -2,9 +2,8 @@ local player = ...
 local pn = ToEnumShortString(player)
 local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
 
+-- It's looking at what GameMode is happening here. Please to fix later.
 local mode = ""
-if SL.Global.GameMode == "StomperZ" then mode = "StomperZ" end
-if SL.Global.GameMode == "ECFA" then mode = "ECFA" end
 
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))

@@ -82,12 +82,7 @@ end
 local t = Def.ActorFrame{
 	InitCommand=function(self)
 		self:xy(_screen.cx, 52):valign(1)
-
-		if SL.Global.GameMode == "StomperZ" then
-			self:zoom(1)
-		else
-			self:zoom(1.33)
-		end
+		self:zoom(1.33)
 	end,
 
 	LoadFont("_miso")..{
@@ -100,13 +95,6 @@ local t = Def.ActorFrame{
 	}
 }
 
-if SL.Global.GameMode == "StomperZ" then
-	t[#t+1] = Def.Quad{
-		InitCommand=function(self)
-			self:diffuse(0,0,0,0.85):zoomto(66,40):valign(0):xy( 0, -20 )
-		end
-	}
-end
 
 
 if #Players == 1 then
