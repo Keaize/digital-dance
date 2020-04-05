@@ -25,12 +25,13 @@ local t = Def.ActorFrame{
 Def.Quad{
 		Name="DiffBackground",
 		InitCommand=function(self)
-				self:x(IsUsingWideScreen() and _screen.cx-294 or 155)
+				self:x(IsUsingWideScreen() and WideScale(_screen.cx-_screen.w/2.7,_screen.cx-_screen.w/2.9) or 155)
 				self:y(IsUsingWideScreen() and _screen.cy + 78 or 193)
 				self:draworder(0)
 				self:diffuse(color("#1e282f"))
 				if IsUsingWideScreen() then
-					self:zoomto(267, 56)
+					self:zoomx(WideScale(160,267))
+					self:zoomy(56)
 					self:visible(P1)
 				else
 					self:zoomto(270,40)
@@ -49,10 +50,11 @@ Def.Quad{
 		InitCommand=function(self)
 			if IsUsingWideScreen() then
 				self:visible(P2)
-				self:xy(_screen.cx+294, _screen.cy + 78)
+				self:xy(WideScale(_screen.cx+_screen.w/2.7,_screen.cx+_screen.w/2.9), _screen.cy + 78)
 				self:draworder(0)
 				self:diffuse(color("#1e282f"))
-				self:zoomto(267, 56)
+				self:zoomx(WideScale(160,267))
+				self:zoomy(56)
 			else
 			end
 		end,
@@ -66,11 +68,11 @@ Def.Quad{
 		Name="ProfileBackground",
 		InitCommand=function(self)
 			self:visible(P1)
-			self:xy(_screen.cx-294, _screen.cy - 184)
+			self:xy(WideScale(_screen.cx-240,_screen.cx-294),WideScale(_screen.cy - 192,_screen.cy - 184))
 			self:draworder(0)
 			self:diffuse(color("#1e282f"))
 				if IsUsingWideScreen() then
-					self:zoomto(267, 112)
+					self:zoomto(WideScale(160,267),WideScale(98,112))
 				else
 					self:visible(false)
 				end
@@ -84,11 +86,11 @@ Def.Quad{
 		Name="ProfileBackground",
 		InitCommand=function(self)
 			self:visible(P2)
-			self:xy(_screen.cx+294, _screen.cy - 184)
+			self:xy(WideScale(_screen.cx+240,_screen.cx+294),WideScale(_screen.cy - 192,_screen.cy - 184))
 			self:draworder(0)
 			self:diffuse(color("#1e282f"))
 			if IsUsingWideScreen() then
-					self:zoomto(267, 112)
+					self:zoomto(WideScale(160,267),WideScale(98,112))
 				else
 					self:visible(false)
 				end
@@ -106,10 +108,10 @@ Def.BitmapText{
 				self:diffuse(color("#FFFFFF"))
 				self:visible(P1)
 				self:horizalign(center)
-				self:maxwidth(266)
-				self:x(135)
+				self:maxwidth(WideScale(159,266))
+				self:x(WideScale(80,135))
 				self:y(10)
-				self:zoom(0.9)
+				self:zoom(WideScale(0.75,0.9))
 				self:settext(name1 .. "'s stats")
 			else
 				self:visible(false)
@@ -129,9 +131,9 @@ Def.Sprite{
 	InitCommand=function(self)
 		if IsUsingWideScreen() then
 			self:visible(P1)
-			self:zoom(0.95)
-			self:x(46)
-			self:y(66)
+			self:zoom(WideScale(0.75,0.95))
+			self:x(WideScale(36,46))
+			self:y(WideScale(60,66))
 		else
 		self:visible(false)
 		end
@@ -149,10 +151,10 @@ Def.BitmapText{
 				self:diffuse(color("#FFFFFF"))
 				self:visible(P2)
 				self:horizalign(center)
-				self:maxwidth(266)
-				self:x(725)
+				self:maxwidth(WideScale(159,266))
+				self:x(WideScale(560,725))
 				self:y(10)
-				self:zoom(0.9)
+				self:zoom(WideScale(0.75,0.9))
 				self:settext(name2 .. "'s stats")
 			else
 			self:visible(false)
@@ -171,9 +173,9 @@ Def.Sprite{
 	InitCommand=function(self)
 		if IsUsingWideScreen() then
 			self:visible(P2)
-			self:zoom(0.95)
-			self:x(634)
-			self:y(66)
+			self:zoom(WideScale(0.75,0.95))
+			self:x(WideScale(514,634))
+			self:y(WideScale(60,66))
 		else
 		self:visible(false)
 		end

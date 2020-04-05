@@ -125,10 +125,10 @@ local pd = Def.ActorFrame{
 		end
 
 		if player == PLAYER_1 then
-			self:x(IsUsingWideScreen() and _screen.w * 0.25 - 5 or 160)
+			self:x(IsUsingWideScreen() and _screen.w * 0.2435 or 160)
 			self:y(IsUsingWideScreen() and 207 or 239)
 		elseif player == PLAYER_2 then
-			self:x(IsUsingWideScreen() and _screen.w * 0.25 + 582 or 490)
+			self:x(IsUsingWideScreen() and WideScale(_screen.w * 0.982,_screen.w * 0.932) or 490)
 			self:y(IsUsingWideScreen() and _screen.h/2 - 33 or 239)
 		end
 

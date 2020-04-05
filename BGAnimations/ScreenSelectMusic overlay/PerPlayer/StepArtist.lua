@@ -38,7 +38,7 @@ return Def.ActorFrame{
 		if player == PLAYER_1 then
 
 			self:y(IsUsingWideScreen() and _screen.cy + 71 or _screen.cy + 153)
-			self:x( _screen.cx - (IsUsingWideScreen() and 435 or 306))
+			self:x( _screen.cx - (IsUsingWideScreen() and WideScale(330,435) or 306))
 
 		elseif player == PLAYER_2 then
 
@@ -54,7 +54,7 @@ return Def.ActorFrame{
 	-- colored background quad
 	Def.Quad{
 		Name="BackgroundQuad",
-		InitCommand=cmd(zoomto, 265, _screen.h/28; x, 141; diffuse, DifficultyIndexColor(1) ),
+		InitCommand=cmd(zoomto, IsUsingWideScreen() and WideScale(160,265) or 265, _screen.h/28; x, IsUsingWideScreen() and WideScale(89,141) or 141; diffuse, DifficultyIndexColor(1) ),
 		StepsHaveChangedCommand=function(self)
 			if IsUsingWideScreen() then
 			else
@@ -80,9 +80,10 @@ return Def.ActorFrame{
 	--stepartist text
 	Def.BitmapText{
 		Font="_miso",
-		InitCommand=cmd(diffuse,color("#1e282f"); horizalign, left; x, 55; maxwidth, 218;zoom,0.9),
+		InitCommand=cmd(diffuse,color("#1e282f"); horizalign, left; x, 55;zoom,0.9),
 		StepsHaveChangedCommand=function(self)
 				if IsUsingWideScreen() then
+					self:maxwidth(WideScale(165,240))
 				else
 					self:x(35)
 					self:maxwidth(285)

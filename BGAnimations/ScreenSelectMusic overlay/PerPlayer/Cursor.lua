@@ -18,7 +18,7 @@ return Def.Sprite{
 	
 		self:visible( false ):halign( p )
 
-		self:zoom(1)
+		self:zoom(IsUsingWideScreen() and WideScale(0.8,1) or 1)
 		-- diffuse with white to make it less #OwMyEyes
 		local color = PlayerColor(player)
 		color[4] = 1
@@ -30,18 +30,18 @@ return Def.Sprite{
 
 		if player == PLAYER_1 then
 			self:x( IsUsingWideScreen() and _screen.cx-330 or 0)
-			self:y( IsUsingWideScreen() and 320 or 194)
+			self:y( IsUsingWideScreen() and WideScale(317,320) or 194)
 			self:effectmagnitude(-6,0,6)
 				if IsUsingWideScreen() then
 				else
-				self:align(-0.44,0.5)
+					self:align(-0.44,0.5)
 				end
 
 		elseif player == PLAYER_2 then
-			self:y(IsUsingWideScreen()and 319 or 193)
+			self:y(IsUsingWideScreen()and WideScale(318,319) or 193)
 			self:effectmagnitude(-6,0,6)
 				if IsUsingWideScreen() then
-					self:align(-12.21,0.49)
+					self:align(WideScale(-12.7,-12.21),0.49)
 				else
 					self:align(-0.44,0.48)
 				end
@@ -126,7 +126,11 @@ return Def.Sprite{
 			local sdl = self:GetParent():GetParent():GetChild("StepsDisplayList")
 			if sdl then
 				local grid = sdl:GetChild("Grid")
-				self:x(grid:GetChild("Blocks_"..RowIndex):GetY()/0.351 - 40)
+				if IsUsingWideScreen() then
+					self:x(WideScale(grid:GetChild("Blocks_"..RowIndex):GetY()/0.5 - 50,grid:GetChild("Blocks_"..RowIndex):GetY()/0.351 - 40))
+				else
+					self:x(grid:GetChild("Blocks_"..RowIndex):GetY()/0.351 - 40)
+				end
 			end
 		end
 	end

@@ -47,7 +47,7 @@ local function getInputHandler(actor)
     end)
 end
 
-local bannerWidth = 370
+local bannerWidth = IsUsingWideScreen() and WideScale(235,370) or 370
 local bannerHeight = 160
 local padding = 12
 
@@ -62,7 +62,7 @@ return Def.ActorFrame {
 
         if IsUsingWideScreen() then
             zoom = 0.7655
-            xPos = 293
+            xPos = WideScale(242,293)
         else
             zoom = 0.895
             xPos = 165
@@ -79,7 +79,7 @@ return Def.ActorFrame {
         if (player == PLAYER_2 and GAMESTATE:IsHumanPlayer(PLAYER_2)) then
             show = true
             if IsUsingWideScreen() then
-				self:addx(587)
+				self:addx(WideScale(482,587))
 			else
 				--self:addx(330)
 				self:addy(-80)

@@ -33,12 +33,12 @@ local af = Def.ActorFrame{
 		Def.BitmapText{
 			Font="_miso",
 			Text=sm_version,
-			InitCommand=function(self) self:horizalign(left):x(IsUsingWideScreen() and -420 or -310):diffuse(TextColor) end,
+			InitCommand=function(self) self:horizalign(left):x(_screen.cx - _screen.w/1.01):diffuse(TextColor) end,
 		},
 		Def.BitmapText{
 			Font="_miso",
 			Text=sl_version and ("Theme v"..sl_version) or "",
-			InitCommand=function(self) self:horizalign(left):x(IsUsingWideScreen() and -420 or -310):y(20):diffuse(TextColor) end,
+			InitCommand=function(self) self:horizalign(left):x(_screen.cx - _screen.w/1.01):y(20):diffuse(TextColor) end,
 		},
 		Def.BitmapText{
 			Font="_miso",

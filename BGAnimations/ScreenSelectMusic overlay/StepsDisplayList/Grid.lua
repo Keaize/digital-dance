@@ -17,7 +17,7 @@ end
 
 local t = Def.ActorFrame{
 	Name="StepsDisplayList",
-	InitCommand=cmd(vertalign, top; draworder, 101; xy, _screen.cx-294, _screen.cy - 154),
+	InitCommand=cmd(vertalign, top; draworder, 101; x, _screen.cx-294;y, _screen.cy - 154;zoom,IsUsingWideScreen() and WideScale(0.7,1) or 1),
 	-- - - - - - - - - - - - - -
 
 	OnCommand=cmd(queuecommand, "RedrawStepsDisplay"),
@@ -83,7 +83,7 @@ local t = Def.ActorFrame{
 
 local Grid = Def.ActorFrame{
 	Name="Grid",
-	InitCommand=cmd(horizalign, left; vertalign, top; x,IsUsingWideScreen() and -149.5 or -21.5;y,IsUsingWideScreen() and 232 or 106),
+	InitCommand=cmd(horizalign, left; vertalign, top; x,IsUsingWideScreen() and WideScale(-95,-149.5) or -21.5;y,IsUsingWideScreen() and WideScale(308,232) or 106),
 }
 
 
@@ -269,7 +269,7 @@ for RowNumber=1,GridRows do
 					self:visible(P2)
 					self:horizalign(center)
 					self:y(2)
-					self:x(RowNumber * height/0.35 * BlockZoomY + 588)
+					self:x(WideScale(RowNumber * height/0.35 * BlockZoomY + 678,RowNumber * height/0.35 * BlockZoomY + 588))
 				else
 					self:visible(false)
 					self:zoom(0)
@@ -296,7 +296,7 @@ for RowNumber=1,GridRows do
 			if IsUsingWideScreen() then
 					self:horizalign(center)
 					self:y(-2)
-					self:x(RowNumber * height/0.35 * BlockZoomY + 584)
+					self:x(WideScale(RowNumber * height/0.35 * BlockZoomY + 674,RowNumber * height/0.35 * BlockZoomY + 584))
 					self:zoom(0.75)
 					self:visible(P2)
 				else
@@ -326,7 +326,7 @@ for RowNumber=1,GridRows do
 					self:visible(P2)
 					self:horizalign(center)
 					self:y(2)
-					self:x(RowNumber * height/0.35 * BlockZoomY+584)
+					self:x(WideScale(RowNumber * height/0.35 * BlockZoomY + 674,RowNumber * height/0.35 * BlockZoomY+584))
 				else
 					self:visible(false)
 					self:zoom(0)
@@ -354,7 +354,7 @@ for RowNumber=1,GridRows do
 					self:visible(P2)
 					self:horizalign(center)
 					self:y(-2)
-					self:x(RowNumber * height/0.35 * BlockZoomY+588)
+					self:x(WideScale(RowNumber * height/0.35 * BlockZoomY + 678,RowNumber * height/0.35 * BlockZoomY+588))
 				else
 					self:visible(false)
 					self:zoom(0)
@@ -382,7 +382,7 @@ for RowNumber=1,GridRows do
 					self:zoom(0.75)
 					self:visible(P2)
 					self:horizalign(center)
-					self:x(RowNumber * height/0.35 * BlockZoomY + 586)
+					self:x(WideScale(RowNumber * height/0.35 * BlockZoomY + 676,RowNumber * height/0.35 * BlockZoomY + 586))
 				else
 					self:visible(false)
 					self:zoom(0)
