@@ -14,14 +14,14 @@ local t = Def.ActorFrame{}
 for i=1,NumWheelItems-1 do
 	-- upper
 	t[#t+1] = Def.Quad{
-		InitCommand=cmd(x,IsUsingWideScreen() and _screen.cx+_screen.w/4-214 or 500;y,9 + (_screen.h/(NumWheelItems+1))*i; zoomy,IsUsingWideScreen() and (_screen.h/(NumWheelItems))/2 or (_screen.h/(NumWheelItems))/1.1;zoomx,IsUsingWideScreen() and  _screen.w/2-106 or 313; diffuse, Color.Black),
+		InitCommand=cmd(x,IsUsingWideScreen() and WideScale(_screen.cx+_screen.w/4-158,_screen.cx+_screen.w/4-214) or 500;y,IsUsingWideScreen() and WideScale(79 + (_screen.h/(NumWheelItems+1))*i,9 + (_screen.h/(NumWheelItems+1))*i) or 9 + (_screen.h/(NumWheelItems+1))*i; zoomy,IsUsingWideScreen() and (_screen.h/(NumWheelItems))/2 or (_screen.h/(NumWheelItems))/1.1;zoomx,IsUsingWideScreen() and  WideScale(_screen.w/2+1,_screen.w/2-106) or 313; diffuse, Color.Black),
 		OnCommand=cmd(sleep, i*0.057; linear,0.125; cropbottom,1; diffusealpha, 0.5; queuecommand, "Hide"),
 		HideCommand=function(self) self:visible(false)
 		end
 	}
 	-- lower
 	t[#t+1] = Def.Quad{
-		InitCommand=cmd(x,IsUsingWideScreen() and _screen.cx+_screen.w/4-214 or 500;y, 25 + (_screen.h/(NumWheelItems+1))*i; zoomy,IsUsingWideScreen() and (_screen.h/(NumWheelItems))/2 or (_screen.h/(NumWheelItems))/1.1;zoomx,IsUsingWideScreen() and  _screen.w/2-106 or 313; diffuse, Color.Black),
+		InitCommand=cmd(x,IsUsingWideScreen() and WideScale(_screen.cx+_screen.w/4-158,_screen.cx+_screen.w/4-214) or 500;y,IsUsingWideScreen() and WideScale(95 + (_screen.h/(NumWheelItems+1))*i,25 + (_screen.h/(NumWheelItems+1))*i) or 25 + (_screen.h/(NumWheelItems+1))*i; zoomy,IsUsingWideScreen() and (_screen.h/(NumWheelItems))/2 or (_screen.h/(NumWheelItems))/1.1;zoomx,IsUsingWideScreen() and  WideScale(_screen.w/2+1,_screen.w/2-106) or 313; diffuse, Color.Black),
 		OnCommand=cmd(sleep, i*0.057; linear,0.125; croptop,1; diffusealpha, 0.5; queuecommand, "Hide"),
 		HideCommand=function(self) self:visible(false) end
 	}
