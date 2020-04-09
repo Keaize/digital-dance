@@ -4,6 +4,7 @@ local name1 = PROFILEMAN:GetPlayerName(0)
 local name2 = PROFILEMAN:GetPlayerName(1)
 local directory1 = PROFILEMAN:GetProfileDir(0)
 local directory2 = PROFILEMAN:GetProfileDir(1)
+local nsj = GAMESTATE:GetNumSidesJoined()
 
 local file1 = directory1 .. "/Profile Picture.png"
 local file2 = directory2 .. "/Profile Picture.png"
@@ -73,6 +74,10 @@ Def.Quad{
 			self:diffuse(color("#1e282f"))
 				if IsUsingWideScreen() then
 					self:zoomto(WideScale(160,267),WideScale(98,112))
+				elseif nsj == 1 then
+					self:zoomto(310,82)
+					self:y(406)
+					self:x(155)
 				else
 					self:visible(false)
 				end
@@ -91,6 +96,10 @@ Def.Quad{
 			self:diffuse(color("#1e282f"))
 			if IsUsingWideScreen() then
 					self:zoomto(WideScale(160,267),WideScale(98,112))
+				elseif nsj == 1 then
+					self:zoomto(310,82)
+					self:y(406)
+					self:x(155)
 				else
 					self:visible(false)
 				end
@@ -113,6 +122,15 @@ Def.BitmapText{
 				self:y(10)
 				self:zoom(WideScale(0.75,0.9))
 				self:settext(name1 .. "'s stats")
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(center)
+				self:maxwidth(300)
+				self:x(198)
+				self:y(372)
+				self:zoom(0.8)
+				self:settext(name1 .. "'s stats")
 			else
 				self:visible(false)
 			end
@@ -134,8 +152,13 @@ Def.Sprite{
 			self:zoom(WideScale(0.75,0.95))
 			self:x(WideScale(36,46))
 			self:y(WideScale(60,66))
+		elseif nsj == 1 then
+			self:visible(P1)
+			self:zoom(0.86)
+			self:x(41)
+			self:y(406.5)
 		else
-		self:visible(false)
+			self:visible(false)
 		end
 	end,
 	OnCommand=function(self)
@@ -155,6 +178,15 @@ Def.BitmapText{
 				self:x(WideScale(560,725))
 				self:y(10)
 				self:zoom(WideScale(0.75,0.9))
+				self:settext(name2 .. "'s stats")
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(center)
+				self:maxwidth(300)
+				self:x(198)
+				self:y(372)
+				self:zoom(0.8)
 				self:settext(name2 .. "'s stats")
 			else
 			self:visible(false)
@@ -176,6 +208,11 @@ Def.Sprite{
 			self:zoom(WideScale(0.75,0.95))
 			self:x(WideScale(514,634))
 			self:y(WideScale(60,66))
+		elseif nsj == 1 then
+			self:visible(P2)
+			self:zoom(0.86)
+			self:x(41)
+			self:y(406.5)
 		else
 		self:visible(false)
 		end

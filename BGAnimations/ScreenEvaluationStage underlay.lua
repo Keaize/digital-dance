@@ -1,6 +1,3 @@
-
-if IsUsingWideScreen() then
-
 ---- this is to calculate the average bpm/difficulty but not let it increment unless the song was finished. HELP ----
 local LastBPM = GetLowerDisplayBPM()
 local SongInSet = SL.Global.Stages.PlayedThisGame
@@ -62,7 +59,3 @@ end
 
 
 return Def.ActorFrame { }
---- dumb af
-else return Def.ActorFrame { }
-
-end

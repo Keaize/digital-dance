@@ -3,6 +3,7 @@ local pn = ToEnumShortString(player)
 local p = PlayerNumber:Reverse()[player]
 
 local text_table, marquee_index
+local nsj = GAMESTATE:GetNumSidesJoined()
 
 if GAMESTATE:IsCourseMode() then
 return Def.ActorFrame { }
@@ -36,14 +37,18 @@ return Def.ActorFrame{
 		self:visible( false ):halign( p )
 
 		if player == PLAYER_1 then
-
 			self:y(IsUsingWideScreen() and _screen.cy + 71 or _screen.cy + 153)
 			self:x( _screen.cx - (IsUsingWideScreen() and WideScale(330,435) or 306))
+			
+			if IsUsingWideScreen() then
+			elseif nsj == 1 then
+				self:x(13.5)
+				self:y(312)
+			end
 
 		elseif player == PLAYER_2 then
-
-			self:y(IsUsingWideScreen() and _screen.cy + 11 or _screen.cy + 13)
 			self:x( _screen.cx - (IsUsingWideScreen() and -153 or 306))
+			self:y(IsUsingWideScreen() and _screen.cy + 11 or _screen.cy + 13)
 		end
 
 		if GAMESTATE:IsHumanPlayer(player) then

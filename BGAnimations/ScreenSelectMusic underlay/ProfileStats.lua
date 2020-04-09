@@ -1,6 +1,6 @@
 local player = ...
-if IsUsingWideScreen() then
 local SongsInSet = SL.Global.Stages.PlayedThisGame
+local nsj = GAMESTATE:GetNumSidesJoined()
 
 local P1 = GAMESTATE:IsHumanPlayer(PLAYER_1)
 local P2 = GAMESTATE:IsHumanPlayer(PLAYER_2)
@@ -110,14 +110,28 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P1)
-			self:horizalign(left)
-			self:maxwidth(90)
-			self:x(WideScale(160,202))
-			self:y(WideScale(25,28))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(P1SongsInSet)
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(left)
+				self:maxwidth(90)
+				self:x(WideScale(160,202))
+				self:y(WideScale(25,28))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(P1SongsInSet)
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(center)
+				self:maxwidth(140)
+				self:x(198)
+				self:y(398)
+				self:zoom(0.75)
+				self:settext(P1SongsInSet .. " / " .. comma_value(P1numSongsPlayed))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
@@ -127,14 +141,19 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P1)
-			self:horizalign(left)
-			self:maxwidth(112)
-			self:x(WideScale(146,186))
-			self:y(WideScale(40,43))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(comma_value(P1numSongsPlayed))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(left)
+				self:maxwidth(112)
+				self:x(WideScale(146,186))
+				self:y(WideScale(40,43))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(comma_value(P1numSongsPlayed))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
@@ -145,14 +164,27 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P1)
-			self:horizalign(left)
-			self:maxwidth(112)
-			self:x(WideScale(142,178))
-			self:y(WideScale(53,58))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(comma_value(P1REALStepsPerSet))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(left)
+				self:maxwidth(112)
+				self:x(WideScale(142,178))
+				self:y(WideScale(53,58))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(comma_value(P1REALStepsPerSet))
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(center)
+				self:maxwidth(112)
+				self:x(198)
+				self:y(425)
+				self:zoom(0.7)
+				self:settext(comma_value(P1REALStepsPerSet) .. " / " .. comma_value(P1numTotalSteps))
+			else
+				self:visible(false)
+			end
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
@@ -163,14 +195,19 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P1)
-			self:horizalign(left)
-			self:maxwidth(114)
-			self:x(WideScale(146,184))
-			self:y(WideScale(67,73))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(comma_value(P1numTotalSteps))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(left)
+				self:maxwidth(114)
+				self:x(WideScale(146,184))
+				self:y(WideScale(67,73))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(comma_value(P1numTotalSteps))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
@@ -180,14 +217,28 @@ local t = Def.ActorFrame{
 	 Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P1)
-			self:horizalign(left)
-			self:maxwidth(90)
-			self:x(WideScale(160,203))
-			self:y(WideScale(81,88))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(RoundTen(AverageDifficultyPlayer1))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(left)
+				self:maxwidth(90)
+				self:x(WideScale(160,203))
+				self:y(WideScale(81,88))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(RoundTen(AverageDifficultyPlayer1))
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(left)
+				self:maxwidth(120)
+				self:x(176)
+				self:y(440)
+				self:zoom(0.75)
+				self:settext(RoundTen(AverageDifficultyPlayer1))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
@@ -197,14 +248,27 @@ local t = Def.ActorFrame{
 	 Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P1)
-			self:horizalign(left)
-			self:maxwidth(90)
-			self:x(WideScale(133,169))
-			self:y(WideScale(95,103))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(RoundTen(AverageBPMPlayer1))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(left)
+				self:maxwidth(90)
+				self:x(WideScale(133,169))
+				self:y(WideScale(95,103))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(RoundTen(AverageBPMPlayer1))
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P1)
+				self:horizalign(left)
+				self:maxwidth(100)
+				self:x(260)
+				self:y(440)
+				self:zoom(0.75)
+				self:settext(RoundTen(AverageBPMPlayer1))
+			else
+				self:visible(false)
+			end
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P1'))
@@ -215,14 +279,28 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P2)
-			self:horizalign(left)
-			self:maxwidth(90)
-			self:x(WideScale(633,790))
-			self:y(WideScale(25,28))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(P2SongsInSet)
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(left)
+				self:maxwidth(90)
+				self:x(WideScale(633,790))
+				self:y(WideScale(25,28))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(P2SongsInSet)
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(center)
+				self:maxwidth(140)
+				self:x(198)
+				self:y(398)
+				self:zoom(0.75)
+				self:settext(P2SongsInSet .. " / " .. comma_value(P2numSongsPlayed))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
@@ -232,14 +310,18 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P2)
-			self:horizalign(left)
-			self:maxwidth(112)
-			self:x(WideScale(620,773))
-			self:y(WideScale(40,43))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(comma_value(P2numSongsPlayed))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(left)
+				self:maxwidth(112)
+				self:x(WideScale(620,773))
+				self:y(WideScale(40,43))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(comma_value(P2numSongsPlayed))
+			else
+				self:visible(false)
+			end
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
@@ -249,14 +331,28 @@ local t = Def.ActorFrame{
 	Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P2)
-			self:horizalign(left)
-			self:maxwidth(112)
-			self:x(WideScale(615,766))
-			self:y(WideScale(53,58))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(comma_value(P2REALStepsPerSet))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(left)
+				self:maxwidth(112)
+				self:x(WideScale(615,766))
+				self:y(WideScale(53,58))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(comma_value(P2REALStepsPerSet))
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(center)
+				self:maxwidth(112)
+				self:x(198)
+				self:y(425)
+				self:zoom(0.75)
+				self:settext(comma_value(P2REALStepsPerSet) .. " / " .. comma_value(P2numTotalSteps))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
@@ -266,14 +362,19 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P2)
-			self:horizalign(left)
-			self:maxwidth(114)
-			self:x(WideScale(618,772))
-			self:y(WideScale(67,73))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(comma_value(P2numTotalSteps))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(left)
+				self:maxwidth(114)
+				self:x(WideScale(618,772))
+				self:y(WideScale(67,73))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(comma_value(P2numTotalSteps))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
@@ -283,14 +384,28 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P2)
-			self:horizalign(left)
-			self:maxwidth(114)
-			self:x(WideScale(632,790))
-			self:y(WideScale(81,88))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(RoundTen(AverageDifficultyPlayer2))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(left)
+				self:maxwidth(114)
+				self:x(WideScale(632,790))
+				self:y(WideScale(81,88))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(RoundTen(AverageDifficultyPlayer2))
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(left)
+				self:maxwidth(120)
+				self:x(176)
+				self:y(440)
+				self:zoom(0.75)
+				self:settext(RoundTen(AverageDifficultyPlayer2))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
@@ -300,14 +415,28 @@ local t = Def.ActorFrame{
  Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:diffuse(color("#FFFFFF"))
-			self:visible(P2)
-			self:horizalign(left)
-			self:maxwidth(114)
-			self:x(WideScale(608,756))
-			self:y(WideScale(95,103))
-			self:zoom(WideScale(0.6,0.7))
-			self:settext(RoundTen(AverageBPMPlayer2))
+			if IsUsingWideScreen() then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(left)
+				self:maxwidth(114)
+				self:x(WideScale(608,756))
+				self:y(WideScale(95,103))
+				self:zoom(WideScale(0.6,0.7))
+				self:settext(RoundTen(AverageBPMPlayer2))
+			elseif nsj == 1 then
+				self:diffuse(color("#FFFFFF"))
+				self:visible(P2)
+				self:horizalign(left)
+				self:maxwidth(100)
+				self:x(260)
+				self:y(440)
+				self:zoom(0.75)
+				self:settext(RoundTen(AverageBPMPlayer2))
+			else
+				self:visible(false)
+			end
+			
 		end,
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(getInputHandler(self, 'PlayerNumber_P2'))
@@ -316,5 +445,3 @@ local t = Def.ActorFrame{
 }
 
 return t
-
-else return end

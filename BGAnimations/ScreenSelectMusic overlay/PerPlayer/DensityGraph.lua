@@ -74,6 +74,10 @@ return Def.ActorFrame {
 
         if (player == PLAYER_1 and GAMESTATE:IsHumanPlayer(PLAYER_1)) then
             show = true
+			if IsUsingWideScreen() then
+			elseif nsj == 1 then
+				self:addy(-80)
+			end
         end
 
         if (player == PLAYER_2 and GAMESTATE:IsHumanPlayer(PLAYER_2)) then
@@ -81,7 +85,6 @@ return Def.ActorFrame {
             if IsUsingWideScreen() then
 				self:addx(WideScale(482,587))
 			else
-				--self:addx(330)
 				self:addy(-80)
 			end
         end

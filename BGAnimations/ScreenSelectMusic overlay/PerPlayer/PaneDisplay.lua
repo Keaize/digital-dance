@@ -16,6 +16,9 @@ local highscorenameX = WideScale(61, 97)
 
 local PaneItems = {}
 
+local nsj = GAMESTATE:GetNumSidesJoined()
+
+
 PaneItems[THEME:GetString("RadarCategory","Taps")] = {
 	-- "rc" is RadarCategory
 	rc = 'RadarCategory_TapsAndHolds',
@@ -127,9 +130,19 @@ local pd = Def.ActorFrame{
 		if player == PLAYER_1 then
 			self:x(IsUsingWideScreen() and _screen.w * 0.2435 or 160)
 			self:y(IsUsingWideScreen() and 207 or 239)
+			if IsUsingWideScreen() then
+			elseif nsj == 1 then
+				self:y(156)
+			end
+			
 		elseif player == PLAYER_2 then
-			self:x(IsUsingWideScreen() and WideScale(_screen.w * 0.982,_screen.w * 0.932) or 490)
 			self:y(IsUsingWideScreen() and _screen.h/2 - 33 or 239)
+			self:x(IsUsingWideScreen() and WideScale(_screen.w * 0.982,_screen.w * 0.932) or 490)
+			if IsUsingWideScreen() then
+			elseif nsj == 1 then
+				self:x(160)
+				self:y(156)
+			end
 		end
 
 		
