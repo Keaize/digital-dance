@@ -79,11 +79,16 @@ end
 if P1SongsInSet == 0 then
 P1SongsInSet = 0
 AverageDifficultyPlayer1 = 0
+P1REALStepsPerSet = 0
+Player1StartingSteps = P1numTotalSteps
+
 end
 
 if P2SongsInSet == 0 then
 P2SongsInSet = 0
 AverageDifficultyPlayer2 = 0
+P2REALStepsPerSet = 0
+Player2StartingSteps = P2numTotalSteps
 end
 
 ------------- it's time to d-d-d-d-d-d-d-reload our functions ----------------
