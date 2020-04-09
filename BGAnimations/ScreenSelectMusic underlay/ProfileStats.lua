@@ -95,6 +95,7 @@ end
 local function getInputHandler(actor, player)
 	return (function(event)
 		if event.GameButton == "Start" and event.PlayerNumber == player and GAMESTATE:IsHumanPlayer(event.PlayerNumber) then
+			SCREENMAN:SetNewScreen('ScreenSelectMusic')
 			actor:visible(true)
 		end
 	end)
