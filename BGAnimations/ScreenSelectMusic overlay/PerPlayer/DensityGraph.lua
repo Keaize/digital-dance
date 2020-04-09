@@ -106,6 +106,7 @@ return Def.ActorFrame {
     PlayerJoinedMessageCommand=function(self, params)
         nsj = GAMESTATE:GetNumSidesJoined()
 		if params.Player == player then
+			SCREENMAN:SetNewScreen('ScreenSelectMusic')
             self:playcommand("Init")
 		end
 	end,
