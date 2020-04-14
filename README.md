@@ -1,6 +1,6 @@
 WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopefully I can fix some problems I had with it along with adding even more features.
 
-#---------------- Notable changes ----------------
+# ---------------- Notable changes ----------------
 
 - Removal of visual themes
 - Removal of different game modes (ITG only)
@@ -24,7 +24,7 @@ WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopeful
 - Each player gets their own difficulty selection instead of being shared.
 - Music wheel is centered and each player's assets are on their own side instead of arbitrarily having P2 cover up the wheel when playing.
 
-#---------------- How to use a profile picture ----------------
+# ---------------- How to use a profile picture ----------------
 
 - Add a new image at the root of your save folder of your profile.
 - (Example: \Save\LocalProfiles\00000000\Profile Picture.png)
@@ -34,7 +34,7 @@ The image must:
 - Hhave a resolution of 96x96
 - Be titled "Profile Picture"
 
-#---------------- KNOWN ISSUES and general things to note ----------------
+# ---------------- KNOWN ISSUES and general things to note ----------------
 
 - Theme is intended for home use only.
 - Theme will not work without a profile.
@@ -42,7 +42,7 @@ The image must:
 - Scrolling to a marathon on screen select music will cause some lag while it tries to draw the density graph.
 - CDTitles appear on top of the sort menu despite draw orders being correct x_x
 
-#---------------- TO DO ----------------
+# ---------------- TO DO ----------------
 
 - Make the density graph load in chunks so that when loading a marathon you're not stuck waiting for the entire thing to load preventing you from scrolling.
 - Add back in the pacemaker goal. (there was some issues early on that made me remove it and then it got added back, but forgot to add that part too lol)
