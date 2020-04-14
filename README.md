@@ -34,7 +34,7 @@ The image must:
 - Hhave a resolution of 96x96
 - Be titled "Profile Picture"
 
-# ---------------- KNOWN ISSUES and general things to note ----------------
+# -- KNOWN ISSUES and general things to note --
 
 - Theme is intended for home use only.
 - Theme will not work without a profile.
