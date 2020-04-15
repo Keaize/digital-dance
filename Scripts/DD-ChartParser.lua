@@ -317,7 +317,9 @@ function CreateNPSPerMeasureCalculator(Song, Steps)
 end
 
 function GetNPSperMeasure(Song, Steps)
-	local calculate = CreateNPSPerMeasureCalculator()
+	local calculate = CreateNPSPerMeasureCalculator(Song, Steps)
+	if calculate == nil then return end
+	
 	local PeakNPS, Density
 	while PeakNPS == nil do
 		PeakNPS, Density = calculate()
