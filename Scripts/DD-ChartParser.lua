@@ -226,7 +226,7 @@ end
 --			So if you're looping through the Density table, subtract 1 from the current index to get the
 --			actual measure number.
 
-function GetNPSperMeasure(Song, Steps)
+function CreateNPSPerMeasureCalculator(Song, Steps)
 	if Song==nil or Steps==nil then return end
 
 	local SongDir = Song:GetSongDir()
@@ -258,48 +258,69 @@ function GetNPSperMeasure(Song, Steps)
 
 	local NPSforThisMeasure, PeakNPS, BPM = 0, 0, 0
 	local TimingData = Steps:GetTimingData()
-
-	-- Loop through each line in our string of measures, trimming potential leading whitespace (thanks, TLOES/Mirage Garden)
-	for line in ChartString:gmatch("[^%s*\r\n]+") do
-
-		-- If we hit a comma or a semi-colon, then we've hit the end of our measure
-		if (line:match("^[,;]%s*")) then
-
-			DurationOfMeasureInSeconds = TimingData:GetElapsedTimeFromBeat((measureCount+1)*4) - TimingData:GetElapsedTimeFromBeat(measureCount*4)
-
-			-- FIXME: We subtract the time at the current measure from the time at the next measure to determine
-			-- the duration of this measure in seconds, and use that to calculate notes per second.
-			--
-			-- Measures *normally* occur over some positive quantity of seconds.  Measures that use warps,
-			-- negative BPMs, and negative stops are normally reported by the SM5 engine as having a duration
-			-- of 0 seconds, and when that happens, we safely assume that there were 0 notes in that measure.
-			--
-			-- This doesn't always hold true.  Measures 48 and 49 of "Mudkyp Korea/Can't Nobody" use a properly
-			-- timed negative stop, but the engine reports them as having very small but positive durations
-			-- which erroneously inflates the notes per second calculation.
-
-			if (DurationOfMeasureInSeconds == 0) then
-				NPSforThisMeasure = 0
-			else
-				NPSforThisMeasure = NotesInThisMeasure/DurationOfMeasureInSeconds
+	
+	local linesPerFrame = 1000
+	
+	local chartLinesIterator = ChartString:gmatch("[^%s*\r\n]+")
+	
+	local lineIndex = 1
+	
+	local update = function()
+		for i=1,linesPerFrame do
+			line = chartLinesIterator()
+			if line == nil then 
+				return PeakNPS, Density
 			end
+			
+			-- If we hit a comma or a semi-colon, then we've hit the end of our measure
+			if (line:match("^[,;]%s*")) then
 
-			-- measureCount in SM truly starts at 0, but Lua's native ipairs() iterator needs indexed tables
-			-- that start at 1.   Add 1 now so the table behaves and subtract 1 later when drawing the histogram.
-			Density[measureCount+1] = NPSforThisMeasure
+				local DurationOfMeasureInSeconds = TimingData:GetElapsedTimeFromBeat((measureCount+1)*4) - TimingData:GetElapsedTimeFromBeat(measureCount*4)
 
-			-- determine whether this measure contained the PeakNPS
-			if NPSforThisMeasure > PeakNPS then PeakNPS = NPSforThisMeasure end
-			-- increment the measureCount
-			measureCount = measureCount + 1
-			-- and reset NotesInThisMeasure
-			NotesInThisMeasure = 0
-		else
-			-- does this line contain a note?
-			if (line:match(TapNotesString)) then
-				NotesInThisMeasure = NotesInThisMeasure + 1
+				-- FIXME: We subtract the time at the current measure from the time at the next measure to determine
+				-- the duration of this measure in seconds, and use that to calculate notes per second.
+				--
+				-- Measures *normally* occur over some positive quantity of seconds.  Measures that use warps,
+				-- negative BPMs, and negative stops are normally reported by the SM5 engine as having a duration
+				-- of 0 seconds, and when that happens, we safely assume that there were 0 notes in that measure.
+				--
+				-- This doesn't always hold true.  Measures 48 and 49 of "Mudkyp Korea/Can't Nobody" use a properly
+				-- timed negative stop, but the engine reports them as having very small but positive durations
+				-- which erroneously inflates the notes per second calculation.
+
+				if (DurationOfMeasureInSeconds == 0) then
+					NPSforThisMeasure = 0
+				else
+					NPSforThisMeasure = NotesInThisMeasure/DurationOfMeasureInSeconds
+				end
+
+				-- measureCount in SM truly starts at 0, but Lua's native ipairs() iterator needs indexed tables
+				-- that start at 1.   Add 1 now so the table behaves and subtract 1 later when drawing the histogram.
+				Density[measureCount+1] = NPSforThisMeasure
+
+				-- determine whether this measure contained the PeakNPS
+				if NPSforThisMeasure > PeakNPS then PeakNPS = NPSforThisMeasure end
+				-- increment the measureCount
+				measureCount = measureCount + 1
+				-- and reset NotesInThisMeasure
+				NotesInThisMeasure = 0
+			else
+				-- does this line contain a note?
+				if (line:match(TapNotesString)) then
+					NotesInThisMeasure = NotesInThisMeasure + 1
+				end
 			end
 		end
+	end
+	
+	return update
+end
+
+function GetNPSperMeasure(Song, Steps)
+	local calculate = CreateNPSPerMeasureCalculator()
+	local PeakNPS, Density
+	while PeakNPS == nil do
+		PeakNPS, Density = calculate()
 	end
 
 	return PeakNPS, Density
@@ -315,6 +336,8 @@ function GetStreams(SongDir, StepsType, Difficulty, NotesPerMeasure, MeasureSequ
 	-- Parse out just the contents of the notes
 	local ChartString = GetSimfileChartString(SimfileString, StepsType, Difficulty, Filetype)
 	if not ChartString then return end
+
+	if #ChartString > 100000 then return end
 
 	-- Which measures have enough notes to be considered as part of a stream?
 	local StreamMeasures, totalMeasures = getStreamMeasures(ChartString, NotesPerMeasure)

@@ -27,6 +27,10 @@ function CreateDensityGraph(width, height)
                 :diffuse(color("#4D6677"))
         end
     }
+	
+	local npsCalculator = nil
+	local curSong = nil
+	local curSteps = nil
 
     local amv = Def.ActorMultiVertex {
         InitCommand=function(self)
@@ -36,17 +40,36 @@ function CreateDensityGraph(width, height)
                 :y(height-0.5)
         end,
         ChangeStepsCommand=function(self, params)
-            local song = params.song
-            local steps = params.steps
-			if steps == nil then return end
+			npsCalculator = nil
+			self:SetNumVertices(0)
+		
+            curSong = params.song
+            curSteps = params.steps
+			if curSteps == nil then return end
 			
-            local stepsType = ToEnumShortString(steps:GetStepsType()):gsub("_", "-"):lower()
-            local difficulty = ToEnumShortString(steps:GetDifficulty())
-            local peakNps, npsPerMeasure = GetNPSperMeasure(song, steps)
-            local timingData = steps:GetTimingData()
+            local stepsType = ToEnumShortString(curSteps:GetStepsType()):gsub("_", "-"):lower()
+            local difficulty = ToEnumShortString(curSteps:GetDifficulty())
+			npsCalculator = CreateNPSPerMeasureCalculator(curSong, curSteps)
+			if npsCalculator == nil then return end
+			
+			self:queuecommand('CalculateNPSPerMeasure')
+        end,
+		CalculateNPSPerMeasureCommand=function(self)
+			if curSteps == nil then return end
+			if npsCalculator == nil then return end
+		
+			local peakNps, npsPerMeasure = npsCalculator()
+			
+			if peakNps == nil then
+				self:sleep(1.0/60.0):queuecommand('CalculateNPSPerMeasure')
+				return
+			end
+			
+			npsCalculator = nil
+
+            local timingData = curSteps:GetTimingData()
 
             if npsPerMeasure == nil then
-                self:SetNumVertices(0)
                 return
             end
 
