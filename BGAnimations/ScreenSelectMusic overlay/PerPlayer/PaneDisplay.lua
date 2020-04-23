@@ -132,7 +132,7 @@ local pd = Def.ActorFrame{
 			self:y(IsUsingWideScreen() and 207 or 239)
 			if IsUsingWideScreen() then
 			elseif nsj == 1 then
-				self:y(156)
+				self:y(GAMESTATE:IsCourseMode() and 239 or 156)
 			end
 			
 		elseif player == PLAYER_2 then
@@ -141,7 +141,7 @@ local pd = Def.ActorFrame{
 			if IsUsingWideScreen() then
 			elseif nsj == 1 then
 				self:x(160)
-				self:y(156)
+				self:y(GAMESTATE:IsCourseMode() and 239 or 156)
 			end
 		end
 
