@@ -15,7 +15,6 @@ WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopeful
 - Preview music no longer loops.
 - Song title present at the bottom of the mod menu.
 - Style indicator at the top right on evaluation (to distinguish between single and double)
-- Reverse puts the targets at the bottom of the screen to give reverse players the same amount of screen real estate as non-reverse players.
 - The per column note tracking will stop counting up once you fail. (This makes determining pad issues a lot easier.)
 - Player stats added that include things like steps per set/lifetime, songs in set/lifetime, average bpm, average difficulty.
 - Added Player Stats support to 4:3 displays (Only in 1 player mode)
