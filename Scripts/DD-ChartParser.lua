@@ -339,7 +339,7 @@ function GetStreams(SongDir, StepsType, Difficulty, NotesPerMeasure, MeasureSequ
 	local ChartString = GetSimfileChartString(SimfileString, StepsType, Difficulty, Filetype)
 	if not ChartString then return end
 
-	if #ChartString > 100000 then return end
+	if #ChartString > 99900000 then return end
 
 	-- Which measures have enough notes to be considered as part of a stream?
 	local StreamMeasures, totalMeasures = getStreamMeasures(ChartString, NotesPerMeasure)
