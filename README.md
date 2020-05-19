@@ -30,7 +30,7 @@ WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopeful
 
 The image must:
 - Be in png format
-- Hhave a resolution of 96x96
+- Have a resolution of 96x96
 - Be titled "Profile Picture"
 
 # -- KNOWN ISSUES and general things to note --
