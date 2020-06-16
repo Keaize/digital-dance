@@ -5,7 +5,7 @@ WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopeful
 - Removal of visual themes
 - Removal of different game modes (ITG only)
 - No more difficulty "blocks".
-- Instead of blocks now there are just the numbers, but enlarged and accompanied a highlight cursor to indicate which difficulty you've selected. Both cursors are colored based on player.
+- Instead of blocks now only the numbers are displayed, but enlarged and accompanied by a highlight cursor to indicate which difficulty you've selected. Both cursors are colored based on player.
 - The chart pane on screen select music (the thing that lists steps, holds, etc) has the difficulty number removed as well. Don't need the redundancy of having the difficulty shown in 3 different ways. Also gives more space for additional info in the future.
 - Density graphs always present on screen select music along with a generalized breakdown if any.
 - Step artist field extended and text made slightly smaller to fit more information before it gets squished into oblivion.
@@ -21,7 +21,8 @@ WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopeful
 - Average difficulty will now account for rate mods : )
 - Each player can have their own unique profile picture and if one isn't present then a default image will appear in place.
 - Each player gets their own difficulty selection instead of being shared.
-- Music wheel is centered and each player's assets are on their own side instead of arbitrarily having P2 cover up the wheel when playing.
+- Music wheel is centered and each player's assets are on their own side instead of arbitrarily having P2 cover up the wheel when playing. (Only on widescreen)
+- Added a song search function. (Up + Enter on Screen Select Music)
 
 # ---------------- How to use a profile picture ----------------
 
@@ -30,7 +31,7 @@ WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopeful
 
 The image must:
 - Be in png format
-- Have a resolution of 96x96
+- Have a 1:1 aspect ratio for best appearance. (Image will be resized as such).
 - Be titled "Profile Picture"
 
 # -- KNOWN ISSUES and general things to note --

@@ -149,14 +149,14 @@ Def.Sprite{
 	InitCommand=function(self)
 		if IsUsingWideScreen() then
 			self:visible(P1)
-			self:zoom(WideScale(0.75,0.95))
+			self:zoomto(WideScale(72,91.2),WideScale(72,91.2))
 			self:x(WideScale(36,46))
 			self:y(WideScale(60,66))
 		elseif nsj == 1 then
 			self:visible(P1)
-			self:zoom(0.86)
+			self:zoomto(82,82)
 			self:x(41)
-			self:y(406.5)
+			self:y(406)
 		else
 			self:visible(false)
 		end
@@ -205,14 +205,14 @@ Def.Sprite{
 	InitCommand=function(self)
 		if IsUsingWideScreen() then
 			self:visible(P2)
-			self:zoom(WideScale(0.75,0.95))
+			self:zoomto(WideScale(72,91.2),WideScale(72,91.2))
 			self:x(WideScale(514,634))
 			self:y(WideScale(60,66))
 		elseif nsj == 1 then
 			self:visible(P2)
-			self:zoom(0.86)
+			self:zoomto(82,82)
 			self:x(41)
-			self:y(406.5)
+			self:y(406)
 		else
 		self:visible(false)
 		end
