@@ -5,7 +5,7 @@ WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopeful
 - Removal of visual themes
 - Removal of different game modes (ITG only)
 - No more difficulty "blocks".
-- Instead of blocks now there is just the numbers, but enlarged and a highlight cursor to indicate which difficulty you've selected. Both cursors are colored based on player.
+- Instead of blocks now there are just the numbers, but enlarged and accompanied a highlight cursor to indicate which difficulty you've selected. Both cursors are colored based on player.
 - The chart pane on screen select music (the thing that lists steps, holds, etc) has the difficulty number removed as well. Don't need the redundancy of having the difficulty shown in 3 different ways. Also gives more space for additional info in the future.
 - Density graphs always present on screen select music along with a generalized breakdown if any.
 - Step artist field extended and text made slightly smaller to fit more information before it gets squished into oblivion.
@@ -43,7 +43,7 @@ The image must:
 
 # ---------------- TO DO ----------------
 
-- Make the density graph load in chunks so that when loading a marathon you're not stuck waiting for the entire thing to load preventing you from scrolling.
+- Make the density graph load in chunks so that when loading a marathon you're not stuck waiting for the entire thing to load preventing you from scrolling. (You can actually scroll now while it's loading, but it's still slow).
 - Add back in the pacemaker goal. (there was some issues early on that made me remove it and then it got added back, but forgot to add that part too lol)
 - Maybe add more player stats (highest difficulty passed?)
 - I really want to add a chart preview, but I don't know how realistic it is to do that theme-side and not be a laggy mess.

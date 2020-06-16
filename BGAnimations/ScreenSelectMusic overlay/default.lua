@@ -7,6 +7,8 @@ local t = Def.ActorFrame{
 	LoadActor("./MusicWheelAnimation.lua"),
 	-- Apply player modifiers from profile
 	LoadActor("./PlayerModifiers.lua"),
+	-- Search jawn
+	LoadActor("./SongSearch.lua"),
 	-- Difficulty Blocks (normal) or CourseContentsList (CourseMode)
 	LoadActor("./StepsDisplayList/default.lua"),
 	-- Graphical Banner
