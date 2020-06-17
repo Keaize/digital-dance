@@ -2,6 +2,7 @@ local sort_wheel = setmetatable({}, sick_wheel_mt)
 
 local input = LoadActor("InputHandler.lua", sort_wheel)
 local wheel_item_mt = LoadActor("WheelItemMT.lua")
+local SongSearch = LoadActor("SongSearch.lua")
 
 local sortmenu = { w=210, h=160 }
 -- - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -36,6 +37,7 @@ local t = Def.ActorFrame {
 
 		local wheel_options = {
 			{"SortBy", "Group"},
+			{"FilterBy", "Song Search"},
 			{"SortBy", "Title"},
 			{"SortBy", "Artist"},
 			{"SortBy", "BPM"},
@@ -144,6 +146,7 @@ local t = Def.ActorFrame {
 	sort_wheel:create_actors( "sort_wheel", 7, wheel_item_mt, _screen.cx, _screen.cy )
 }
 
+t[#t+1] = SongSearch
 t[#t+1] = LoadActor( THEME:GetPathS("ScreenSelectMaster", "change") )..{ Name="change_sound", SupportPan = false }
 t[#t+1] = LoadActor( THEME:GetPathS("common", "start") )..{ Name="start_sound", SupportPan = false }
 

@@ -24,6 +24,10 @@ local function input(event)
 			if focus.kind == "SortBy" then
 				MESSAGEMAN:Broadcast('Sort',{order=focus.sort_by})
 				overlay:queuecommand("HideSortMenu")
+				
+			elseif focus.kind == "FilterBy" then
+				MESSAGEMAN:Broadcast('Filter')
+				overlay:queuecommand("HideSortMenu")
 
 			elseif focus.kind == "ChangeMode" then
 				SL.Global.GameMode = focus.change

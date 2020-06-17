@@ -9,10 +9,8 @@ t = Def.ActorFrame{
 		screen = SCREENMAN:GetTopScreen()
 		wheel = screen:GetMusicWheel()
 	end,
-	CodeMessageCommand=function(self, params)
-		if params.Name:match("SongSearch") then
-			self:playcommand("SearchSong")
-		end
+	FilterMessageCommand=function(self)
+		self:queuecommand('SearchSong')
 	end,
 	SearchSongCommand=function(self)
                 SCREENMAN:AddNewScreenToTop("ScreenTextEntry");
