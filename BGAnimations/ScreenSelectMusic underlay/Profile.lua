@@ -53,7 +53,7 @@ Def.Quad{
 				self:visible(P2)
 				self:xy(WideScale(_screen.cx+_screen.w/2.7,_screen.cx+_screen.w/2.9), _screen.cy + 78)
 				self:draworder(0)
-				self:diffuse(color("#1e282f"))
+				self:diffuse(0.5,0.5,0.5,0.5)
 				self:zoomx(WideScale(160,267))
 				self:zoomy(56)
 			else
@@ -71,7 +71,7 @@ Def.Quad{
 			self:visible(P1)
 			self:xy(WideScale(_screen.cx-240,_screen.cx-294),WideScale(_screen.cy - 192,_screen.cy - 184))
 			self:draworder(0)
-			self:diffuse(color("#1e282f"))
+			self:diffuse(0.5,0.5,0.5,0.5)
 				if IsUsingWideScreen() then
 					self:zoomto(WideScale(160,267),WideScale(98,112))
 				elseif nsj == 1 then
@@ -93,7 +93,7 @@ Def.Quad{
 			self:visible(P2)
 			self:xy(WideScale(_screen.cx+240,_screen.cx+294),WideScale(_screen.cy - 192,_screen.cy - 184))
 			self:draworder(0)
-			self:diffuse(color("#1e282f"))
+			self:diffuse(0.5,0.5,0.5,0.5)
 			if IsUsingWideScreen() then
 					self:zoomto(WideScale(160,267),WideScale(98,112))
 				elseif nsj == 1 then
