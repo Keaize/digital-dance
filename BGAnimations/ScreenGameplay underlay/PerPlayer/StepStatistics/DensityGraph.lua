@@ -88,8 +88,8 @@ local InitializeNPSHistogram = function()
 		x, y, t = nil, nil, nil
 
 		-- magic numbers obtained from Photoshop's Eyedrop tool
-		local yellow = {0.968, 0.953, 0.2, 1}
-		local orange = {0.863, 0.553, 0.2, 1}
+		local yellow = {0, 1, 0.5, 1}
+		local orange = {0, 1, 1, 1}
 		local upper
 
 		for i, nps in ipairs(NPSperMeasure) do
