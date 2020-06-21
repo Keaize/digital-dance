@@ -117,7 +117,7 @@ return Def.ActorFrame {
             local steps = GAMESTATE:GetCurrentSteps(player)
             self:playcommand("ChangeSteps", {song=song, steps=steps})
             self:stoptweening()
-            self:linear(0.1):diffusealpha(0.5)
+            self:linear(0.1):diffusealpha(0.9)
         else
             self:stoptweening()
             self:linear(0.1):diffusealpha(0)
@@ -130,7 +130,7 @@ return Def.ActorFrame {
         InitCommand=function(self)
             self:zoomto(bannerWidth - (padding * 2)+1, 20)
                 :diffuse(color("#000000"))
-                :diffusealpha(0.5)
+                :diffusealpha(0.8)
                 :align(0, 0)
                 :y(bannerHeight / 2 - (padding * 1.5) - 20)
         end,
