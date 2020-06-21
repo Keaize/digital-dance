@@ -214,7 +214,7 @@ pd[#pd+1] = Def.Quad{
 
 			if StepsOrTrail then
 				local difficulty = StepsOrTrail:GetDifficulty()
-				self:diffuse( DifficultyColor(difficulty) )
+				self:diffuse(0.5,0.5,0.5,0.5)
 			else
 				self:diffuse( PlayerColor(player) )
 			end
