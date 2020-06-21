@@ -1,3 +1,5 @@
+Just a recolor of Hayoero's theme to Animal Crossing aesthetics.
+
 WIP Theme for SM5 that uses an older build of Simply Love as a base, but hopefully I can fix some problems I had with it along with adding even more features.
 
 # ---------------- Notable changes ----------------
