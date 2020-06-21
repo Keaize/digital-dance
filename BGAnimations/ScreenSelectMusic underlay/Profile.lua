@@ -29,7 +29,7 @@ Def.Quad{
 				self:x(IsUsingWideScreen() and WideScale(_screen.cx-_screen.w/2.7,_screen.cx-_screen.w/2.9) or 155)
 				self:y(IsUsingWideScreen() and _screen.cy + 78 or 193)
 				self:draworder(0)
-				self:diffuse(color("#1e282f"))
+				self:diffuse(0.5,0.5,0.5,0.5)
 				if IsUsingWideScreen() then
 					self:zoomx(WideScale(160,267))
 					self:zoomy(56)
